@@ -1,14 +1,10 @@
+import Router from "./Router.tsx"
 
+export default function App() {
 
-function App() {
-  
   return (
     <>
-      <div>
-        <p>Hallo</p>
-      </div>
+      <Router />
     </>
   )
 }
-
-export default App
