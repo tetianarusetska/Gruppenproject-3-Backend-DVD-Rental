@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "BebasNeue";
+    src: url("./assets/fonts/bebas_neue/BebasNeue-Regular.woff2");
+}
+
+@font-face {
+    font-family: "CreatoDisplay";
+    src: url("./assets/fonts/creato_display/CreatoDisplay-ExtraBold.otf");
+}
+
+@font-face {
+    font-family: "DiamondGrotesk";
+    src: url("./assets/fonts/DiamondGrotesk-VF.ttf");
+}
+
+@font-face {
+    font-family: "Itsajump";
+    src: url("./assets/fonts/itsajump-ItalicBold.otf");
+}
+
+@font-face {
+    font-family: "Magoa";
+    src: url("./assets/fonts/MagoaDemo.otf");
+}
+
+@font-face {
+    font-family: "Fayte";
+    src: url("./assets/fonts/fayte-font/faytetest-regular.otf");
+}
+
+@font-face {
+    font-family: "Lecturis";
+    src: url("./assets/fonts/fh-lecturis-font-family/fhlecturisroundedtest-bold.otf");
+}
+
+@font-face {
+    font-family: "Kino40";
+    src: url("./assets/fonts/kino_40/KINO40.ttf");
+}
+
+@font-face {
+    font-family: "Made_Brush";
+    src: url("./assets/fonts/made_soulmaze/MADE\ Soulmaze\ Brush\ PERSONAL\ USE.otf");
+}
+
+
+@font-face {
+    font-family: "Made";
+    src: url("./assets/fonts/made_soulmaze/MADE\ Soulmaze\ PERSONAL\ USE.otf");
+}
+
+@font-face {
+    font-family: "Outfit";
+    src: url("./assets/fonts/Montserrat_Outfit/Outfit/Outfit-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Outward";
+    src: url("./assets/fonts/outward/outward-block.ttf");
+}
+
+@font-face {
+    font-family: "Outward_round";
+    src: url("./assets/fonts/outward/outward-round.ttf");
+}
+
+
+@font-face {
+    font-family: "Palmore";
+    src: url("./assets/fonts/PALMORE-Font/WOFF2/Palmore.woff2");
+}
+
+@font-face {
+    font-family: "Kosmos";
+    src: url("./assets/fonts/planet_kosmos/PLANK___.TTF");
+}
+
+@font-face {
+    font-family: "Bros";
+    src: url("./assets/fonts/zt_bros_oskon_90s/ZTBrosOskon90s-Regular.otf");
+}
+
+:root {
+    --primaryColor: black;
+}
+
+body {
+    color: var(--primaryColor);
+}
