@@ -13,6 +13,20 @@ const getAllCustomers = async (): Promise<Customer[]> => {
     return result.rows
 }
 
+const findCustomerById = async (customer_id: number): Promise<Customer | null> => {
+
+    const result = await pool.query<Customer>(
+        `
+        SELECT customer_id, first_name, last_name, email 
+        FROM customer
+        WHERE customer_id = $1
+        `,
+        [customer_id]
+    )
+    return result.rows[0] ?? null
+}
+
 export default {
-    getAll: getAllCustomers
+    getAll: getAllCustomers,
+    find: findCustomerById
 }
