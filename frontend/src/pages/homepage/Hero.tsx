@@ -1,43 +1,58 @@
-import { useRef } from "react"
-import { useScroll, useTransform, motion } from 'framer-motion'
-import img1 from "../../assets/images/img1.jpg";
+import { useRef } from "react";
+import { useScroll, useTransform, motion } from "framer-motion";
+import img2 from "../../assets/images/img2.jpg";
 
 export default function Hero() {
-
     const container = useRef<HTMLDivElement>(null);
 
-    const { scrollYProgress } = useScroll({        //ein Hook von Framer Motion, er gibt ScrollYProgress zurück(0 sichtbar -> 1 verschnwindet)
+    const { scrollYProgress } = useScroll({
         target: container,
-        offset: ["start end", 'end start']         //mit dem Parameter offset wird definiert wann den Messbereich begint und endet
-    })
+        offset: ["start end", "end start"],
+    });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);  //wandelt den ScrollYProgress-Wert in einen CSS-Wert
-    //das Bild bewegt sich langsamer als die Seite scrollt
+    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
     return (
-        <div
+        <section
             ref={container}
-            style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}  //clipPath schneidet das Bild von unten nach oben weg
-            className="w-screen h-screen"
+            style={{ clipPath: "polygon(0% 0,100% 0%,100% 100%,0 100%)" }}
+            className="relative h-screen w-screen overflow-hidden"
         >
-            <motion.div                //ein spezieller div von Framer-Motion, die animierte Werte(y) direkt im Style-Prop akzeptiert
-                style={{ y }}          //und perfomant auf der GPU rendert
+            <motion.div
+                style={{ y }}
+                className="absolute inset-0"
             >
                 <img
-                    src={img1} alt="img1"
-                    className="w-screen h-screen object-cover"
+                    src={img2}
+                    alt="DVD Rental"
+                    className="h-full w-full object-cover"
                 />
-                <p
-                    className="absolute top-100 left-100 text-8xl font-['Kosmos']"
+
+                <div className="absolute inset-0 bg-black/45" />
+            </motion.div>
+
+            <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+                <h1
+                    className="font-['Kosmos'] text-6xl md:text-8xltext-white drop-shadow-2xl
+                    "
                 >
                     DVD RENTAL
-                </p>
+                </h1>
+
                 <p
-                    className="absolute top-160 left-35 text-6xl font-['BebasNeue']"
+                    className="mt-10 max-w-4xl font-['Lecturis'] text-xl md:text-4xl text-gray-200 leading-relaxed"
                 >
-                    Filme verwalten. Ausleihen verfolgen. Übersicht behalten.
+                    Filme verwalten. Ausleihen verfolgen.
+                    <br />
+                    Übersicht behalten.
                 </p>
-            </motion.div>
-        </div>
+
+                <button
+                    className="mt-20 font-['Itsajump'] text-4xl mx-auto p-3 rounded-4xl w-62.5 h-18 flex items-center justify-center text-(--mainColor) backdrop-blur-md bg-(--mainColor)/5 border border-(--mainColor)/20 shadow-lg transition-all duration-300 hover:bg-(--mainColor)/10 hover:scale-[1.03] active:scale-[0.98]"
+                >
+                    Jetzt starten
+                </button>
+            </div>
+        </section>
     );
 }
