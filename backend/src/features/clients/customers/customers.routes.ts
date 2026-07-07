@@ -3,6 +3,6 @@ import customersController from "./customers.controller.ts"
 
 const customersRouter = express.Router();
 
-customersRouter.get("/customers/all", customersController.getAll);
+customersRouter.get("/all", customersController.getAll);
 
 export default customersRouter
