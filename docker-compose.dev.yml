@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/server
+      - /server/node_modules
+    command: npm run dev
