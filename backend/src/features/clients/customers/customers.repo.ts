@@ -26,7 +26,21 @@ const findCustomerById = async (customer_id: number): Promise<Customer | null> =
     return result.rows[0] ?? null
 }
 
+const deleteCustomerById = async (customer_id: number): Promise<Customer | undefined> => {
+    const res = await pool.query(
+        `
+        DELETE FROM customer
+        WHERE customer_id = $1
+        RETURNING *
+        `,
+        [customer_id]
+    );
+
+    return res.rows[0];
+};
+
 export default {
     getAll: getAllCustomers,
-    find: findCustomerById
+    find: findCustomerById,
+    delete: deleteCustomerById
 }

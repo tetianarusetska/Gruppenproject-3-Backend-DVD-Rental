@@ -8,6 +8,7 @@ import customersRouter from "./features/clients/customers/customers.routes.ts"
 import citiesRouter from "./features/clients/cities/cities.routes.ts"
 import countriesRouter from "./features/clients/countries/countries.routes.ts"
 import addressesRouter from "./features/clients/addresses/addresses.routes.ts"
+import { customersErrorHandler } from "./features/clients/customers/customers.middleware.ts"
 
 const port = 3000
 const app = express()
@@ -25,6 +26,7 @@ app.use("/customers", customersRouter)
 app.use("/cities", citiesRouter)
 app.use("/countries", countriesRouter)
 app.use("/addresses", addressesRouter)
+app.use(customersErrorHandler);
 
 
 app.listen(port, () => {

@@ -11,16 +11,38 @@ const getAllCustomers = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
-const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response) => {
-
-    const customerId = Number(req.params.customer_id);
-
-    const customer = await customersService.find(customerId)
-
-    res.json(customer)
+const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+    try {
+        const customerId = Number(req.params.customer_id);
+        const customer = await customersService.find(customerId);
+        res.json(customer);
+    } catch (err) {
+        next(err);
+    }
 }
+
+const deleteCustomerById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const customerId = Number(req.params.customer_id);
+
+        const deletedCustomer = await customersService.delete(customerId);
+
+        if (!deletedCustomer) {
+            return res.status(404).json({ error: "Customer not found" });
+        }
+
+        return res.status(200).json({
+            message: "Kunde erfolgreich gelöscht.",
+            customer: deletedCustomer
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
 
 export default {
   getAll: getAllCustomers,
-  find: findCustomerById
+  find: findCustomerById,
+  delete: deleteCustomerById
 }
