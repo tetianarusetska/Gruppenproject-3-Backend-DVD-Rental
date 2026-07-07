@@ -2,6 +2,7 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import { getHealth } from "./health.ts"
+
 import filmRouter from "./features/films/film.routes.ts"
 import customersRouter from "./features/clients/customers/customers.routes.ts"
 import citiesRouter from "./features/clients/cities/cities.routes.ts"

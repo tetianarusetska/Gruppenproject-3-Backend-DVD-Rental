@@ -11,6 +11,16 @@ const getAllCustomers = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
+const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response) => {
+
+    const customerId = Number(req.params.customer_id);
+
+    const customer = await customersService.find(customerId)
+
+    res.json(customer)
+}
+
 export default {
-  getAll: getAllCustomers
+  getAll: getAllCustomers,
+  find: findCustomerById
 }
