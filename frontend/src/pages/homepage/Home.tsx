@@ -3,6 +3,9 @@ import Lenis from 'lenis'
 import { useEffect } from 'react'
 
 import Hero from "./Hero"
+import MainArea from "./MainArea.tsx"
+import Footer from '../../components/footer/Footer';
+import FooterIntro from '../../components/footer/FooterIntro';
 
 
 export default function Home() {
@@ -25,6 +28,9 @@ export default function Home() {
     return (
         <>
             <Hero />
+            <MainArea />
+            <FooterIntro />
+            <Footer />
         </>
     );
 }
