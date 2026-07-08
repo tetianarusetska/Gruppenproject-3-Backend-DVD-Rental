@@ -1,4 +1,5 @@
 import { getPostgresPool } from "../../../db/postgres.pool.ts"
+import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import { type Customer } from "../types/customer.ts"
 
 const pool = getPostgresPool();
@@ -10,7 +11,6 @@ const CUSTOMER_QUERY = `
         c.first_name,
         c.last_name,
         c.email,
-        a.phone,
         co.country_id,
         co.country,
         ci.city_id,
@@ -18,7 +18,8 @@ const CUSTOMER_QUERY = `
         a.postal_code,
         a.district,
         a.address_id,
-        a.address
+        a.address,
+        a.phone
     FROM customer c
     JOIN address a ON c.address_id = a.address_id
     JOIN city ci ON a.city_id = ci.city_id
@@ -32,7 +33,6 @@ function mapRowToCustomer(row: any): Customer {
         first_name: row.first_name,
         last_name: row.last_name,
         email: row.email,
-        phone: row.phone,
         full_address: {
             country_id: row.country_id,
             country: row.country,
@@ -42,9 +42,41 @@ function mapRowToCustomer(row: any): Customer {
             district: row.district,
             address_id: row.address_id,
             address: row.address,
+            phone: row.phone
         }
     };
 }
+
+const createCustomer = async (customer: CreateCustomerInput, address_id: number): Promise<Customer> => {
+
+    const result = await pool.query(
+        `
+        INSERT INTO customer
+        (
+            store_id,
+            first_name,
+            last_name,
+            email,
+            address_id
+
+        )
+        VALUES ($1,$2,$3,$4,$5)
+        RETURNING customer_id
+        `,
+        [
+            customer.store_id,
+            customer.first_name,
+            customer.last_name,
+            customer.email,
+            address_id
+        ]
+    );
+
+    return await findCustomerById(
+        result.rows[0].customer_id
+    ) as Customer;
+};
+
 
 const getAllCustomers = async (): Promise<Customer[]> => {
     const result = await pool.query(CUSTOMER_QUERY);
@@ -87,5 +119,6 @@ const findCustomerById = async (customer_id: number): Promise<Customer | null> =
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
-    delete: deleteCustomerById
+    delete: deleteCustomerById,
+    create: createCustomer
 }

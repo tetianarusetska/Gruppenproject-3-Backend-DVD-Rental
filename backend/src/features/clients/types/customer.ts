@@ -4,7 +4,6 @@ export type Customer = {
     first_name: string
     last_name: string
     email: string
-    phone: string
     full_address: {
         country_id: number
         country: string
@@ -14,5 +13,6 @@ export type Customer = {
         district: string
         address_id: number
         address: string
+        phone: string
     }
 }
