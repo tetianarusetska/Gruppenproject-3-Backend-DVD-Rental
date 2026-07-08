@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import Hero from "./Hero"
 import MainArea from "./MainArea.tsx"
+import RentalDashboard from "./RentalDashboard"
 import Footer from '../../components/footer/Footer';
 import FooterIntro from '../../components/footer/FooterIntro';
 
@@ -29,6 +30,7 @@ export default function Home() {
         <>
             <Hero />
             <MainArea />
+            <RentalDashboard />
             <FooterIntro />
             <Footer />
         </>

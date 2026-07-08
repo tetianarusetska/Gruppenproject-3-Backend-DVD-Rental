@@ -2,6 +2,7 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import { getHealth } from "./health.ts"
+import cors from "cors"
 
 import filmRouter from "./features/films/film.routes.ts"
 import actorRouter from "./features/actor/actor.router.ts"
@@ -22,6 +23,7 @@ const pool = getPostgresPool()
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("dev"))
+app.use(cors())
 
 app.get("/health", getHealth)
 
