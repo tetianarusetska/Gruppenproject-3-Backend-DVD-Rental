@@ -1,9 +1,9 @@
 import { type City } from "../types/city.ts"
-import citiesRepo from "./cities.repo.ts"
+import cityRepo from "./city.repo.ts"
 
 
 async function getAllCities(): Promise<City[]> {
-    return await citiesRepo.getAll();
+    return await cityRepo.getAll();
 }
 
 export default {

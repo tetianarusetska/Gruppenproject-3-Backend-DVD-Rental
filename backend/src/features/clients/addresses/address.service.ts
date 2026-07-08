@@ -1,9 +1,9 @@
 import { type Address } from "../types/address.ts"
-import addressesRepo from "./addresses.repo.ts"
+import addressRepo from "./address.repo.ts"
 
 
 async function getAllAddresses(): Promise<Address[]> {
-    return await addressesRepo.getAll();
+    return await addressRepo.getAll();
 }
 
 export default {

@@ -1,9 +1,9 @@
 import { type Country } from "../types/country.ts"
-import countriesRepo from "./countries.repo.ts"
+import countryRepo from "./country.repo.ts"
 
 
 async function getAllCountries(): Promise<Country[]> {
-    return await countriesRepo.getAll();
+    return await countryRepo.getAll();
 }
 
 export default {

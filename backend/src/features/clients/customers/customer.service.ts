@@ -1,14 +1,14 @@
 import { type Customer } from "../types/customer.ts"
-import customersRepo from "./customers.repo.ts"
-import { CustomerNotFound, CustomerHasRelatedRecords } from "./customers.errors.ts"
+import customerRepo from "./customer.repo.ts"
+import { CustomerNotFound, CustomerHasRelatedRecords } from "./customer.errors.ts"
 
 
-async function getAllClients(): Promise<Customer[]> {
-    return await customersRepo.getAll();
+async function getAllCustomers(): Promise<Customer[]> {
+    return await customerRepo.getAll();
 }
 
 const findCustomerById = async (customer_id: number): Promise<Customer> => {
-    const customer = await customersRepo.find(customer_id);
+    const customer = await customerRepo.find(customer_id);
 
     if (!customer) {
         throw new CustomerNotFound(customer_id);
@@ -19,7 +19,7 @@ const findCustomerById = async (customer_id: number): Promise<Customer> => {
 
 async function deleteCustomerById(customer_id: number): Promise<Customer | undefined> {
     try {
-        return await customersRepo.delete(customer_id);
+        return await customerRepo.delete(customer_id);
     } catch (err: any) {
         if (err.code === "23503") {
             throw new CustomerHasRelatedRecords(customer_id);
@@ -29,7 +29,7 @@ async function deleteCustomerById(customer_id: number): Promise<Customer | undef
 }
 
 export default {
-    getAll: getAllClients,
+    getAll: getAllCustomers,
     find: findCustomerById,
     delete: deleteCustomerById
 }
