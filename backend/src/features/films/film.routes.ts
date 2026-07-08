@@ -6,5 +6,6 @@ const router = express.Router()
 
 router.get("/", filmController.findAll)
 router.get("/:id", filmController.find)
+router.use(filmErrorHandler)
 
 export default router
