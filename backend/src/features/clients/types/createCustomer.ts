@@ -1,5 +1,4 @@
-export type Customer = {
-    customer_id: number
+export type CreateCustomer = {
     store_id: number
     first_name: string
     last_name: string
@@ -7,12 +6,9 @@ export type Customer = {
     phone: string
     full_address: {
         country_id: number
-        country: string
         city_id: number
-        city: string,
         postal_code: string
         district: string
-        address_id: number
         address: string
     }
 }

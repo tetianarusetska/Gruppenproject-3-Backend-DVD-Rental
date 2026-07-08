@@ -2,6 +2,7 @@ import type { Response, NextFunction } from "express";
 import type { Request } from "../types/request.ts";
 import customerService from "./customer.service.ts"
 
+
 const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
   try {
         const customer = await customerService.getAll();
@@ -10,16 +11,6 @@ const getAllCustomers = async (req: Request, res: Response, next: NextFunction) 
         next(err);
     }
 };
-
-const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
-    try {
-        const customerId = Number(req.params.customer_id);
-        const customer = await customerService.find(customerId);
-        res.json(customer);
-    } catch (err) {
-        next(err);
-    }
-}
 
 const deleteCustomerById = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -40,6 +31,17 @@ const deleteCustomerById = async (req: Request, res: Response, next: NextFunctio
         next(err);
     }
 };
+
+
+const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+    try {
+        const customerId = Number(req.params.customer_id);
+        const customer = await customerService.find(customerId);
+        res.status(200).json(customer);
+    } catch (err) {
+        next(err);
+    }
+}
 
 export default {
   getAll: getAllCustomers,
