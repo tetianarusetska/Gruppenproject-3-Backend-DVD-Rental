@@ -7,6 +7,19 @@ async function getAllCustomers(): Promise<Customer[]> {
     return await customerRepo.getAll();
 }
 
+
+async function deleteCustomerById(customer_id: number): Promise<Customer | null> {
+    try {
+        return await customerRepo.delete(customer_id);
+    } catch (err: any) {
+        if (err.code === "23503") {
+            throw new CustomerHasRelatedRecords(customer_id);
+        }
+        throw err;
+    }
+}
+
+
 const findCustomerById = async (customer_id: number): Promise<Customer> => {
     const customer = await customerRepo.find(customer_id);
 
@@ -17,16 +30,6 @@ const findCustomerById = async (customer_id: number): Promise<Customer> => {
     return customer;
 }
 
-async function deleteCustomerById(customer_id: number): Promise<Customer | undefined> {
-    try {
-        return await customerRepo.delete(customer_id);
-    } catch (err: any) {
-        if (err.code === "23503") {
-            throw new CustomerHasRelatedRecords(customer_id);
-        }
-        throw err;
-    }
-}
 
 export default {
     getAll: getAllCustomers,

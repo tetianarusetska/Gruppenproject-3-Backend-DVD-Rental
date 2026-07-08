@@ -6,7 +6,7 @@ const pool = getPostgresPool();
 const getAllAddresses = async (): Promise<Address[]> => {
     const result = await pool.query<Address>(
         `
-        SELECT address_id, city_id, phone, address, district
+        SELECT address_id, city_id, phone, address, district, postal_code
         FROM address
         `
     )
