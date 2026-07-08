@@ -14,11 +14,6 @@ export default function Register() {
 
                 <form className="flex flex-col gap-6">
                     <input
-                        type="text"
-                        placeholder="Name"
-                        className="h-16 px-6 rounded-2xl bg-black/20 border border-(--mainColor)/20 text-xl font-['BebasNeue'] placeholder:text-gray-400 outline-none focus:border-(--mainColor)/60"
-                    />
-                    <input
                         type="email"
                         placeholder="E-Mail"
                         className="h-16 px-6 rounded-2xl bg-black/20 border border-(--mainColor)/20 text-xl font-['BebasNeue'] placeholder:text-gray-400 outline-none focus:border-(--mainColor)/60"
@@ -26,11 +21,6 @@ export default function Register() {
                     <input
                         type="password"
                         placeholder="Passwort"
-                        className="h-16 px-6 rounded-2xl bg-black/20 border border-(--mainColor)/20 text-xl font-['BebasNeue'] placeholder:text-gray-400 outline-none focus:border-(--mainColor)/60"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Passwort bestätigen"
                         className="h-16 px-6 rounded-2xl bg-black/20 border border-(--mainColor)/20 text-xl font-['BebasNeue'] placeholder:text-gray-400 outline-none focus:border-(--mainColor)/60"
                     />
                     <button
