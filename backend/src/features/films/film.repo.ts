@@ -1,7 +1,7 @@
 import { getPostgresPool } from "../../db/postgres.pool.ts";
 import type { Film, FilmList } from "./types/film.ts";
 
-const pool = getPostgresPool();
+const pool = getPostgresPool()
 
 const findFilm = async (id: number): Promise<Film | null> => {
     const result = await pool.query<Film>(

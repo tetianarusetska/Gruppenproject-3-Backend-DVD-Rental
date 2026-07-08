@@ -4,6 +4,7 @@ import morgan from "morgan"
 import { getHealth } from "./health.ts"
 
 import filmRouter from "./features/films/film.routes.ts"
+import actorRouter from "./features/actor/actor.router.ts"
 import customerRouter from "./features/clients/customers/customer.routes.ts"
 import cityRouter from "./features/clients/cities/city.routes.ts"
 import countryRouter from "./features/clients/countries/country.routes.ts"
@@ -25,6 +26,7 @@ app.get("/health", getHealth)
 
 //films
 app.use("/films", filmRouter)
+app.use("/actors", actorRouter)
 //customers
 app.use("/customers", customerRouter)
 app.use("/cities", cityRouter)
