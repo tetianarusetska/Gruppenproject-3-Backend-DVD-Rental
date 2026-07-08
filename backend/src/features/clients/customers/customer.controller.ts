@@ -3,6 +3,17 @@ import type { Request } from "../types/request.ts";
 import customerService from "./customer.service.ts"
 
 
+const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const createdCustomer = await customerService.create(req.body);
+
+    return res.status(201).json(createdCustomer);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
   try {
         const customer = await customerService.getAll();
@@ -46,5 +57,6 @@ const findCustomerById = async (req: Request<{ customer_id: number }>, res: Resp
 export default {
   getAll: getAllCustomers,
   find: findCustomerById,
-  delete: deleteCustomerById
+  delete: deleteCustomerById,
+  create: createCustomer
 }

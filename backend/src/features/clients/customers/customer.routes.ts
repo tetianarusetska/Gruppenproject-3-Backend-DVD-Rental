@@ -6,5 +6,6 @@ const customerRouter = express.Router();
 customerRouter.get("/all", customerController.getAll);
 customerRouter.get("/:customer_id", customerController.find);
 customerRouter.delete("/:customer_id", customerController.delete);
+customerRouter.post("/new", customerController.create);
 
 export default customerRouter
