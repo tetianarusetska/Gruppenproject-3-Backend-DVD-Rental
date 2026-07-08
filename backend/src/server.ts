@@ -88,6 +88,37 @@ app.get("/rentals/active", async (req, res) => {
     res.status(500).send("Fehler beim Laden der aktiven Rentals")
   }
 })
+app.get("/rentals/search", async (req, res) => {
+  try {
+    const name = req.query.name
+
+    const result = await pool.query(`
+      SELECT
+        r.rental_id,
+        r.rental_date,
+        r.return_date,
+        c.first_name AS customer_first_name,
+        c.last_name AS customer_last_name,
+        f.title AS film_title
+      FROM public.rental r
+      JOIN public.customer c
+        ON r.customer_id = c.customer_id
+      JOIN public.inventory i
+        ON r.inventory_id = i.inventory_id
+      JOIN public.film f
+        ON i.film_id = f.film_id
+      WHERE c.first_name ILIKE $1
+         OR c.last_name ILIKE $1
+      ORDER BY r.rental_date DESC
+      LIMIT 50;
+    `, [`%${name}%`])
+
+    res.json(result.rows)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send("Fehler bei der Rental-Suche")
+  }
+})
 app.get("/rentals/:id", async (req, res) => {
   try {
     const rentalId = req.params.id
