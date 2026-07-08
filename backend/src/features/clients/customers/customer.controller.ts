@@ -1,11 +1,11 @@
 import type { Response, NextFunction } from "express";
 import type { Request } from "../types/request.ts";
-import customersService from "./customers.service.ts"
+import customerService from "./customer.service.ts"
 
 const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
   try {
-        const customers = await customersService.getAll();
-        res.status(200).json(customers);
+        const customer = await customerService.getAll();
+        res.status(200).json(customer);
     } catch (err) {
         next(err);
     }
@@ -14,7 +14,7 @@ const getAllCustomers = async (req: Request, res: Response, next: NextFunction) 
 const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
-        const customer = await customersService.find(customerId);
+        const customer = await customerService.find(customerId);
         res.json(customer);
     } catch (err) {
         next(err);
@@ -25,7 +25,7 @@ const deleteCustomerById = async (req: Request, res: Response, next: NextFunctio
     try {
         const customerId = Number(req.params.customer_id);
 
-        const deletedCustomer = await customersService.delete(customerId);
+        const deletedCustomer = await customerService.delete(customerId);
 
         if (!deletedCustomer) {
             return res.status(404).json({ error: "Customer not found" });

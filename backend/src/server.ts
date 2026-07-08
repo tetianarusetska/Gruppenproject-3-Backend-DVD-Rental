@@ -4,11 +4,11 @@ import morgan from "morgan"
 import { getHealth } from "./health.ts"
 
 import filmRouter from "./features/films/film.routes.ts"
-import customersRouter from "./features/clients/customers/customers.routes.ts"
-import citiesRouter from "./features/clients/cities/cities.routes.ts"
-import countriesRouter from "./features/clients/countries/countries.routes.ts"
-import addressesRouter from "./features/clients/addresses/addresses.routes.ts"
-import { customersErrorHandler } from "./features/clients/customers/customers.middleware.ts"
+import customerRouter from "./features/clients/customers/customer.routes.ts"
+import cityRouter from "./features/clients/cities/city.routes.ts"
+import countryRouter from "./features/clients/countries/country.routes.ts"
+import addressRouter from "./features/clients/addresses/address.routes.ts"
+import { customersErrorHandler } from "./features/clients/customers/customer.middleware.ts"
 
 const port = 3000
 const app = express()
@@ -22,10 +22,10 @@ app.get("/health", getHealth)
 //films
 app.use("/films", filmRouter)
 //customers
-app.use("/customers", customersRouter)
-app.use("/cities", citiesRouter)
-app.use("/countries", countriesRouter)
-app.use("/addresses", addressesRouter)
+app.use("/customers", customerRouter)
+app.use("/cities", cityRouter)
+app.use("/countries", countryRouter)
+app.use("/addresses", addressRouter)
 app.use(customersErrorHandler);
 
 

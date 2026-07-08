@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express"
-import {  CustomerNotFound, CustomerHasRelatedRecords } from "./customers.errors.ts"
+import {  CustomerNotFound, CustomerHasRelatedRecords } from "./customer.errors.ts"
 
 export const customersErrorHandler = (error: Error, _: Request, res: Response, next: NextFunction) => {
 
