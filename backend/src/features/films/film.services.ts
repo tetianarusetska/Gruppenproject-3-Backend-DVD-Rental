@@ -3,7 +3,7 @@ import { FilmNotFound } from "./film.error.ts";
 import filmRepo from "./film.repo.ts";
 
 const findFilm = async (id: number): Promise<Film> => {
-    const film = await filmRepo.find(id);
+    const film = await filmRepo.find(id)
 
     if (!film) {
         throw new FilmNotFound(id)
