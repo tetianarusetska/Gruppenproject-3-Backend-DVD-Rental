@@ -89,4 +89,5 @@
 
 body {
     color: var(--mainColor);
+    background-color: var(--bgColor);
 }

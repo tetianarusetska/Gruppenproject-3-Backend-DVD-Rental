@@ -21,7 +21,7 @@ const Section2 = () => {
 
     return (
         <div className='flex flex-col justify-start items-start gap-10 text-(--mainColor)'>
-            <h1 className='text-[8vw] leading-[0.8] mt-10 font-["Kosmos"] text-purple-600'>DVD Rental</h1>
+            <h1 className='text-[8vw] leading-[0.8] mt-10 font-["Kosmos"] text-purple-600'>RetroVision Video</h1>
             <div className='flex flex-row justify-between items-end'>
                 <p className='text-[8vw] leading-[0.8] mt-10 font-[BebasNeue]'> Dein Film. Deine Wahl.</p>
                 <p className='font-bold font-[BebasNeue]'>©2026</p>

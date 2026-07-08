@@ -1,8 +1,12 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import img2 from "../../assets/images/img2.jpg";
 
 export default function Hero() {
+
+    const navigate = useNavigate();
+
     const container = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
@@ -36,7 +40,7 @@ export default function Hero() {
                     className="font-['Kosmos'] text-6xl md:text-8xltext-white drop-shadow-2xl
                     "
                 >
-                    DVD RENTAL
+                    RetroVision Video
                 </h1>
 
                 <p
@@ -48,6 +52,7 @@ export default function Hero() {
                 </p>
 
                 <button
+                    onClick={() => navigate("/login")}
                     className="mt-20 font-['Itsajump'] text-4xl mx-auto p-3 rounded-4xl w-62.5 h-18 flex items-center justify-center text-(--mainColor) backdrop-blur-md bg-(--mainColor)/5 border border-(--mainColor)/20 shadow-lg transition-all duration-300 hover:bg-(--mainColor)/10 hover:scale-[1.03] active:scale-[0.98]"
                 >
                     Jetzt starten
