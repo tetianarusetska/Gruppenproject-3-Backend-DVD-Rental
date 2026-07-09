@@ -1,6 +1,7 @@
 import { getPostgresPool } from "../../../db/postgres.pool.ts"
 import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import { type Customer } from "../types/customer.ts"
+import type { CustomerRental } from "../types/customerRentals.ts";
 
 const pool = getPostgresPool();
 
@@ -84,21 +85,22 @@ const getAllCustomers = async (): Promise<Customer[]> => {
 }
 
 
-const deleteCustomerById = async (customer_id: number): Promise<Customer | null> => {
+const searchCustomer = async (query: string): Promise<Customer[]> => {
 
-    const customer = await findCustomerById(customer_id);
-
-    if (!customer) {
-        return null;
-    }
-
-    await pool.query(
-        `DELETE FROM customer WHERE customer_id = $1`,
-        [customer_id]
+    const result = await pool.query(
+        `
+        ${CUSTOMER_QUERY}
+        WHERE
+            LOWER(c.first_name) LIKE LOWER($1)
+            OR LOWER(c.last_name) LIKE LOWER($1)
+            OR LOWER(c.email) LIKE LOWER($1)
+        ORDER BY c.last_name, c.first_name
+        `,
+        [`%${query}%`]
     );
 
-    return customer;
-};
+    return result.rows.map(mapRowToCustomer);
+}
 
 const findCustomerById = async (customer_id: number): Promise<Customer | null> => {
 
@@ -116,9 +118,62 @@ const findCustomerById = async (customer_id: number): Promise<Customer | null> =
     return mapRowToCustomer(row);
 }
 
+const deleteCustomerById = async (customer_id: number): Promise<Customer | null> => {
+
+    const customer = await findCustomerById(customer_id);
+
+    if (!customer) {
+        return null;
+    }
+
+    await pool.query(
+        `DELETE FROM customer WHERE customer_id = $1`,
+        [customer_id]
+    );
+
+    return customer;
+};
+
+
+// Rentals, Statistics und so weiter
+
+const getCustomerRentals = async (customer_id: number): Promise<CustomerRental[]> => {
+    const result = await pool.query(
+        `
+        SELECT
+            r.rental_id,
+            r.rental_date,
+            r.return_date,
+            f.film_id,
+            f.title
+        FROM rental r
+        JOIN inventory i
+            ON r.inventory_id = i.inventory_id
+        JOIN film f
+            ON i.film_id = f.film_id
+        WHERE r.customer_id = $1
+        ORDER BY r.rental_date DESC
+        `,
+        [customer_id]
+    );
+
+    return result.rows.map(row => ({
+        rental_id: row.rental_id,
+        rental_date: row.rental_date,
+        return_date: row.return_date,
+        film: {
+            film_id: row.film_id,
+            title: row.title
+        }
+    }));
+};
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
     delete: deleteCustomerById,
-    create: createCustomer
+    create: createCustomer,
+    search: searchCustomer,
+    // Rentals, Statistics und so weiter
+    getRentals: getCustomerRentals
 }

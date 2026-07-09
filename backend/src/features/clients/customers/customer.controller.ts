@@ -4,24 +4,48 @@ import customerService from "./customer.service.ts"
 
 
 const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const createdCustomer = await customerService.create(req.body);
+    try {
+        const createdCustomer = await customerService.create(req.body);
 
-    return res.status(201).json(createdCustomer);
+        return res.status(201).json(createdCustomer);
 
-  } catch (err) {
-    next(err);
-  }
+    } catch (err) {
+        next(err);
+    }
 };
 
+
 const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
-  try {
+    try {
         const customer = await customerService.getAll();
         res.status(200).json(customer);
     } catch (err) {
         next(err);
     }
 };
+
+
+const searchCustomer = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const query = String(req.query.q || "");
+        const customers = await customerService.search(query);
+        res.status(200).json(customers);
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+    try {
+        const customerId = Number(req.params.customer_id);
+        const customer = await customerService.find(customerId);
+        res.status(200).json(customer);
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 const deleteCustomerById = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -43,20 +67,24 @@ const deleteCustomerById = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
+// Rentals, Statistics und so weiter
 
-const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+const getCustomerRentals = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
-        const customer = await customerService.find(customerId);
-        res.status(200).json(customer);
+        const rentals = await customerService.getRentals(customerId);
+        res.status(200).json(rentals);
     } catch (err) {
         next(err);
     }
 }
 
 export default {
-  getAll: getAllCustomers,
-  find: findCustomerById,
-  delete: deleteCustomerById,
-  create: createCustomer
+    getAll: getAllCustomers,
+    find: findCustomerById,
+    delete: deleteCustomerById,
+    create: createCustomer,
+    search: searchCustomer,
+    // Rentals, Statistics und so weiter
+    getRentals: getCustomerRentals
 }
