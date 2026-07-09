@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 @font-face {
@@ -80,6 +82,161 @@
 @font-face {
     font-family: "Bros";
     src: url("./assets/fonts/zt_bros_oskon_90s/ZTBrosOskon90s-Regular.otf");
+}
+
+@font-face {
+    font-family: "BrandonGrotesque-Light";
+    src: url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.eot");
+    src: url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/4720a7d244f0e454a222c6c175fd2a01.svg#BrandonGrotesque-Light")format("svg");
+}
+
+@font-face {
+    font-family: "Algerian";
+    src: url("./assets/fonts/AlgerianRegular/AlgerianRegular.ttf");
+}
+
+@font-face {
+    font-family: "Jacquard";
+    src: url("./assets/fonts/Jacquard_24/Jacquard24-Regular.ttf");
+}
+
+@font-face {
+    font-family: "LeMurmure";
+    src: url("./assets/fonts/murmure-main/fonts/le-murmure.ttf");
+}
+
+@font-face {
+    font-family: "Alegreya";
+    src: url("./assets/fonts/Alegreya/Alegreya-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Almendra";
+    src: url("./assets/fonts/Almendra/Almendra-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Melodrama";
+    src: url("./assets/fonts/Melodrama_Complete-2/Fonts/TTF/Melodrama-Variable.ttf");
+}
+
+@font-face {
+    font-family: "ABCMaxi";
+    src: url("./assets/fonts/ABC Maxi/ABC Maxi Plus Variable/.ABCMaxiPlusVariable-Trial.ttf");
+}
+
+@font-face {
+    font-family: "Boxing";
+    src: url("./assets/fonts/Boxing_Complete/Fonts/WEB/fonts/Boxing-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Aktura";
+    src: url("./assets/fonts/Aktura_Complete/Fonts/WEB/fonts/Aktura-Regular.ttf");
+}
+
+@font-face {
+    font-family: "New Title";
+    src: url("./assets/fonts/NewTitle_Complete/Fonts/TTF/NewTitle-Variable.ttf");
+}
+
+@font-face {
+    font-family: "Striper";
+    src: url("./assets/fonts/Striper_Complete/Fonts/WEB/fonts/Striper-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Grotesk";
+    src: url("./assets/fonts/test2ttf/Test_Die_Grotesk/TestDieGroteskVF-Roman.ttf");
+}
+
+@font-face {
+    font-family: "Grotesk_thin";
+    src: url("./assets/fonts/test1otf/Test_Die_Grotesk/TestDieGrotesk-C-Thin.otf");
+}
+
+@font-face {
+    font-family: "Grotesk_Founders_Medium";
+    src: url("./assets/fonts/test1otf/Test_Founders_Grotesk_Collection/Test_Founders_Grotesk/TestFoundersGrotesk-Medium.otf");
+}
+
+@font-face {
+    font-family: "Grotesk_Founders_Regular";
+    src: url("./assets/fonts/test1otf/Test_Founders_Grotesk_Collection/Test_Founders_Grotesk/TestFoundersGrotesk-Regular.otf");
+}
+
+@font-face {
+    font-family: "Grotesk_XBold";
+    src: url("./assets/fonts/test1otf/Test_Founders_Grotesk_Collection/Test_Founders_Grotesk_X-Condensed/TestFoundersGroteskX-Condensed-Bold.otf");
+}
+
+@font-face {
+    font-family: "Geograph";
+    src: url("./assets/fonts/test2ttf/Test_Geograph/TestGeographVF-Roman.ttf");
+}
+
+@font-face {
+    font-family: "Geograph_Medium";
+    src: url("./assets/fonts/test1otf/Test_Geograph/TestGeograph-Medium.otf");
+}
+
+@font-face {
+    font-family: "Geograph_Light";
+    src: url("./assets/fonts/test1otf/Test_Geograph/TestGeograph-Light.otf");
+}
+
+@font-face {
+    font-family: "Untitled";
+    src: url("./assets/fonts/test2ttf/Test_Untitled_Collection/Test_Untitled_Sans/TestUntitledSansVF-Roman.ttf");
+}
+
+@font-face {
+    font-family: "American_Gr";
+    src: url("./assets/fonts/test1otf/Test_American_Grotesk_Collection/Test_American_Grotesk_Compressed/TestAmericanGroteskCompressed-Light.otf");
+}
+
+@font-face {
+    font-family: "Feijoa";
+    src: url("./assets/fonts/test1otf/Test_Feijoa/TestFeijoa-Display.otf");
+}
+
+@font-face {
+    font-family: "Karbon";
+    src: url("./assets/fonts/test1otf/Test_Karbon_Collection/Test_Karbon/TestKarbon-Regular.otf");
+}
+
+@font-face {
+    font-family: "MaelstromSans";
+    src: url("./assets/fonts/test1otf/Test_Maelstrom_Collection/Test_Maelstrom_Sans/TestMaelstromSans-Bold.otf");
+}
+
+@font-face {
+    font-family: "MaelstromBold";
+    src: url("./assets/fonts/test1otf/Test_Maelstrom_Collection/Test_Maelstrom/TestMaelstrom-Bold.otf");
+}
+
+@font-face {
+    font-family: "Manuka";
+    src: url("./assets/fonts/test1otf/Test_Manuka_Collection/Test_Manuka/TestManuka-Light.otf");
+}
+
+@font-face {
+    font-family: "Manuka_Ultra";
+    src: url("./assets/fonts/test1otf/Test_Manuka_Collection/Test_Manuka/TestManuka-Ultra.otf");
+}
+
+@font-face {
+    font-family: "SohneSchmalBuch";
+    src: url("./assets/fonts/test1otf/Test_Sohne_Collection/Test_Sohne_Schmal/TestSohneSchmalBuch.otf");
+}
+
+@font-face {
+    font-family: "SohneSchmalLeicht";
+    src: url("./assets/fonts/test1otf/Test_Soohne_Collection/Test_Soohne_Schmal/TestSohneSchmalExtraleicht.otf");
 }
 
 :root {
