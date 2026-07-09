@@ -2,6 +2,7 @@ import { getPostgresPool } from "../../../db/postgres.pool.ts"
 import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import { type Customer } from "../types/customer.ts"
 import type { CustomerRental } from "../types/customerRentals.ts";
+import type { CustomerPayment } from "../types/customerPayment.ts";
 
 const pool = getPostgresPool();
 
@@ -168,6 +169,44 @@ const getCustomerRentals = async (customer_id: number): Promise<CustomerRental[]
     }));
 };
 
+
+const getCustomerPayments = async (customer_id: number): Promise<CustomerPayment[]> => {
+    const result = await pool.query(
+        `
+        SELECT
+            p.payment_id,
+            p.payment_date,
+            p.amount,
+            p.staff_id,
+            p.rental_id,
+            f.film_id,
+            f.title
+        FROM payment p
+        JOIN rental r
+        ON p.rental_id = r.rental_id
+        JOIN inventory i
+        ON r.inventory_id = i.inventory_id
+        JOIN film f
+        ON i.film_id = f.film_id
+        WHERE r.customer_id = $1
+        ORDER BY p.payment_date DESC
+        `,
+        [customer_id]
+    );
+
+    return result.rows.map(row => ({
+        payment_id: row.payment_id,
+        payment_date: row.payment_date,
+        amount: row.amount,
+        staff_id: row.staff_id,
+        rental_id: row.rental_id,
+        film: {
+            film_id: row.film_id,
+            title: row.title
+        }
+    }));
+};
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -175,5 +214,6 @@ export default {
     create: createCustomer,
     search: searchCustomer,
     // Rentals, Statistics und so weiter
-    getRentals: getCustomerRentals
+    getRentals: getCustomerRentals,
+    getPayments: getCustomerPayments
 }

@@ -4,6 +4,7 @@ import { CustomerNotFound, CustomerHasRelatedRecords } from "./customer.errors.t
 import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import addressService from "../addresses/address.service.ts"
 import type { CustomerRental } from "../types/customerRentals.ts";
+import type { CustomerPayment } from "../types/customerPayment.ts";
 
 async function createCustomer(customer: CreateCustomerInput): Promise<Customer> {
 
@@ -57,6 +58,11 @@ const getCustomerRentals = async (customer_id: number): Promise<CustomerRental[]
     return await customerRepo.getRentals(customer_id);
 };
 
+const getCustomerPayments = async (customer_id: number): Promise<CustomerPayment[]> => {
+    await findCustomerById(customer_id);
+    return await customerRepo.getPayments(customer_id);
+};
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -64,5 +70,6 @@ export default {
     create: createCustomer,
     search: searchCustomer,
     // Rentals, Statistics und so weiter
-    getRentals: getCustomerRentals
+    getRentals: getCustomerRentals,
+    getPayments: getCustomerPayments
 }
