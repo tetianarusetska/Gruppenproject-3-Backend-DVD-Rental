@@ -91,3 +91,12 @@ body {
     color: var(--mainColor);
     background-color: var(--bgColor);
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;             
+}

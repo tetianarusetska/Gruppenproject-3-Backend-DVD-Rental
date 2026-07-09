@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -74,8 +74,10 @@ export default function Login() {
                     </button>
 
                 </div>
-
             </div>
+
+            <Link to="/dashboard" className="mt-10 text-center text-gray-400 font-['BebasNeue'] text-lg">Dashboard</Link>
+
 
         </section>
     );

@@ -4,11 +4,10 @@ import { useEffect } from 'react'
 import { useAuth } from "../../context/useAuth"
 import { useNavigate } from "react-router-dom"
 
-import Hero from "./Hero"
+import Hero from "./Hero.tsx"
 import MainArea from "./MainArea.tsx"
-import RentalDashboard from "./RentalDashboard"
-import Footer from '../../components/footer/Footer';
-import FooterIntro from '../../components/footer/FooterIntro';
+import Footer from '../../components/footer/Footer.tsx';
+import FooterIntro from '../../components/footer/FooterIntro.tsx';
 
 
 export default function Home() {
@@ -50,7 +49,6 @@ export default function Home() {
         <>
             <Hero />
             <MainArea />
-            <RentalDashboard />
             <FooterIntro />
             <Footer />
         </>
