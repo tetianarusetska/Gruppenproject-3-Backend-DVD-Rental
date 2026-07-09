@@ -1,5 +1,5 @@
 import { getPostgresPool } from "../../db/postgres.pool.ts";
-import type { Film, FilmList } from "./types/film.ts";
+import type { Film, FilmList, FilmAvailability } from "./types/film.ts";
 
 const pool = getPostgresPool()
 
@@ -79,7 +79,35 @@ const findAllFilms = async (): Promise<FilmList[]> => {
     return result.rows
 }
 
+const findFilmAvailability = async (title: string): Promise<FilmAvailability[]> => {
+  const result = await pool.query<FilmAvailability>(
+    `
+    SELECT
+      f.film_id,
+      f.title,
+      i.store_id,
+      COUNT(i.inventory_id)::int AS total_copies,
+      COUNT(i.inventory_id) FILTER (
+        WHERE r.rental_id IS NULL
+      )::int AS available_copies
+    FROM public.film f
+    JOIN public.inventory i
+      ON f.film_id = i.film_id
+    LEFT JOIN public.rental r
+      ON i.inventory_id = r.inventory_id
+      AND r.return_date IS NULL
+    WHERE f.title ILIKE $1
+    GROUP BY f.film_id, f.title, i.store_id
+    ORDER BY f.title ASC, i.store_id ASC;
+    `,
+    [`%${title}%`]
+  )
+
+  return result.rows
+}
+    
 export default {
     find: findFilm,
-    findAll: findAllFilms
+    findAll: findAllFilms,
+    findAvailability: findFilmAvailability
 }

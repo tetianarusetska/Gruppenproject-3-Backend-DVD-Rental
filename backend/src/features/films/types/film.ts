@@ -8,7 +8,7 @@ export type Film = {
     description: string
     release_year: number
     language_id: number
-    retal_duration: number
+    rental_duration: number
     rental_rate: number
     length: number
     replacement_cost: number
@@ -30,4 +30,12 @@ export type FilmList = {
     language_name: string
     categories: string
     actors: string
+}
+
+export type FilmAvailability = {
+  film_id: number
+  title: string
+  store_id: number
+  total_copies: number
+  available_copies: number
 }

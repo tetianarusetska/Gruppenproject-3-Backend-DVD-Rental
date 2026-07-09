@@ -5,6 +5,7 @@ import { filmErrorHandler } from "./film.middleware.ts"
 const router = express.Router()
 
 router.get("/", filmController.findAll)
+router.get("/availability", filmController.findAvailability)
 router.get("/:id", filmController.find)
 router.use(filmErrorHandler)
 

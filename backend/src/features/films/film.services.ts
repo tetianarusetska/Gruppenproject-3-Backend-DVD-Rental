@@ -1,4 +1,4 @@
-import type { Film, FilmList } from "./types/film.ts";
+import type { Film, FilmList, FilmAvailability } from "./types/film.ts";
 import { FilmNotFound } from "./film.error.ts";
 import filmRepo from "./film.repo.ts";
 
@@ -15,8 +15,14 @@ const findFilm = async (id: number): Promise<Film> => {
 const findAllFilms = async (): Promise<FilmList[]> => {
     return await filmRepo.findAll()
 }
+const findFilmAvailability = async (
+  title: string
+): Promise<FilmAvailability[]> => {
+  return await filmRepo.findAvailability(title)
+}
 
 export default {
     find: findFilm,
-    findAll: findAllFilms
+    findAll: findAllFilms,
+    findAvailability: findFilmAvailability
 }

@@ -15,7 +15,16 @@ const findAllFilms = async (_: Request, res: Response) => {
     res.json(films)
 }
 
+const findFilmAvailability = async (_req: Request, res: Response) => {
+  const title = String(_req.query.title ?? "")
+
+  const films = await filmServices.findAvailability(title)
+
+  res.json(films)
+}
+
 export default {
     find: findFilm,
-    findAll: findAllFilms
+    findAll: findAllFilms,
+    findAvailability: findFilmAvailability
 }
