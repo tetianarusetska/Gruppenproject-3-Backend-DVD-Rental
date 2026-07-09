@@ -4,6 +4,8 @@ import morgan from "morgan"
 import { getHealth } from "./health.ts"
 import cors from "cors"
 
+import authRouter from "./features/auth/auth.router.ts"
+
 // films
 import filmRouter from "./features/films/film.routes.ts"
 import actorRouter from "./features/actor/actor.router.ts"
@@ -30,6 +32,8 @@ app.use(morgan("dev"))
 app.use(cors())
 
 app.get("/health", getHealth)
+
+app.use("/auth", authRouter)
 
 //films
 app.use("/films", filmRouter)
