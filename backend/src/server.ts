@@ -22,17 +22,31 @@ import addressRouter from "./features/clients/addresses/address.routes.ts"
 import rentalRouter from "./features/rental/rental.router.ts"
 
 import { customersErrorHandler } from "./features/clients/customers/customer.middleware.ts"
-import { getPostgresPool } from "./db/postgres.pool.ts"
 
 const port = 3000
 const app = express()
 
-const pool = getPostgresPool()
+app.use((req, res, next) => {
+  // Erlaube explizit dein Frontend
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  // Erlaube das Mitsenden von Cookies (credentials)
+  res.header("Access-Control-Allow-Credentials", "true");
+  // Erlaube die gängigen HTTP-Methoden
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  // Erlaube notwendige Header-Typen
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+  // Falls es ein OPTIONS-Preflight-Request vom Browser ist, direkt mit 200 beantworten
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("dev"))
-app.use(cors())
 
 app.get("/health", getHealth)
 
