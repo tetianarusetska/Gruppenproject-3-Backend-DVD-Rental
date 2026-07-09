@@ -79,6 +79,16 @@ const getCustomerRentals = async (req: Request<{ customer_id: number }>, res: Re
     }
 }
 
+const getCustomerPayments = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+    try {
+        const customerId = Number(req.params.customer_id);
+        const payments = await customerService.getPayments(customerId);
+        res.status(200).json(payments);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -86,5 +96,6 @@ export default {
     create: createCustomer,
     search: searchCustomer,
     // Rentals, Statistics und so weiter
-    getRentals: getCustomerRentals
+    getRentals: getCustomerRentals,
+    getPayments: getCustomerPayments
 }
