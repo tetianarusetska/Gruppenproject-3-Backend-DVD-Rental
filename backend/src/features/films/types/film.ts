@@ -39,3 +39,28 @@ export type FilmAvailability = {
   total_copies: number
   available_copies: number
 }
+
+export type CreateFilmInput = {
+    title: string;
+    description: string;
+    release_year: number;
+    rental_duration: number;
+    rental_rate: string | number;
+    length: number;
+    replacement_cost: string | number;
+    rating: string;
+    special_features: string[];
+    language: {
+        language_id: number;
+        name: string;
+    };
+    categories: Array<{
+        category_id: number;
+        name: string;
+    }>;
+    actors: Array<{
+        actor_id: number;
+        first_name: string;
+        last_name: string;
+    }>;
+};
