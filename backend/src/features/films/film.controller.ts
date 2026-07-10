@@ -1,8 +1,12 @@
 import { type Request, type Response } from "express"
 import filmServices from "./film.services.ts";
 
-const findFilm = async (req: Request<{ id: number }>, res: Response) => {
-    const { id } = req.params
+const findFilm = async (req: Request<{ id: string }>, res: Response) => {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Ungültige Film-ID übergeben" });
+    }
 
     const film = await filmServices.find(id)
 
