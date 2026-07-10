@@ -3,10 +3,11 @@ import { type Customer } from "../../../types/Customer";
 interface CRUDButtonsProps {
     selectedCustomer: Customer | null;
     onCreate: () => void;
+    onEdit: () => void;
     onDelete: () => void;
 }
 
-export default function CRUDButtons({ selectedCustomer, onCreate, onDelete }: CRUDButtonsProps) {
+export default function CRUDButtons({ selectedCustomer, onCreate, onEdit, onDelete }: CRUDButtonsProps) {
     return (
         <div className="flex flex-row gap-10 justify-end items-end">
             <button
@@ -14,6 +15,13 @@ export default function CRUDButtons({ selectedCustomer, onCreate, onDelete }: CR
                 className="rounded-2xl bg-white px-6 py-2 text-sm font-semibold text-black transition hover:bg-zinc-200 font-['Montserrat']"
             >
                 Erstellen
+            </button>
+            <button
+                onClick={onEdit}
+                disabled={!selectedCustomer}
+                className="rounded-2xl bg-white px-6 py-2 text-sm font-semibold text-black transition hover:bg-zinc-200 font-['Montserrat'] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white"
+            >
+                Bearbeiten
             </button>
             <button
                 onClick={onDelete}

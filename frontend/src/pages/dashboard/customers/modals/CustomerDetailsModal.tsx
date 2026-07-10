@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { customerService } from "../../../services/customer.service";
-import { type Customer } from "../../../types/Customer";
-import type { Payment } from "../../../types/Payment";
-import type { Rental } from "../../../types/Rental";
+import { customerService } from "../../../../services/customer.service";
+import { type Customer } from "../../../../types/Customer";
+import type { Payment } from "../../../../types/Payment";
+import type { Rental } from "../../../../types/Rental";
 
 interface CustomerDetailsModalProps {
     customer: Customer | null;

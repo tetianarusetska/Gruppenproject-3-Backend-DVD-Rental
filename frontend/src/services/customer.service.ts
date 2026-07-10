@@ -89,7 +89,7 @@ export const customerService = {
     return res.json();
   },
 
-  
+
   async delete(customerId: number): Promise<void> {
     const res = await fetch(`${API_URL}/customers/${customerId}`, {
       method: "DELETE",
@@ -101,4 +101,34 @@ export const customerService = {
       throw new Error(errorData.error || "Kunde konnte nicht gelöscht werden.");
     }
   },
+
+  async update(payload: {
+    customer_id: number;
+    store_id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    full_address: {
+      address_id: number;
+      postal_code: string;
+      city_id: number;
+      district: string;
+      address: string;
+      phone: string;
+    };
+  }): Promise<Customer> {
+    const res = await fetch(`${API_URL}/customers/update`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Kunde konnte nicht aktualisiert werden.");
+    }
+    return res.json();
+  },
+
 };
