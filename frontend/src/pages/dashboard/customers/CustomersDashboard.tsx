@@ -2,9 +2,10 @@ import { useState } from "react";
 import CustomerSearch from "./CustomerSearch";
 import CustomerTable from "./CustomerTable";
 import CRUDButtons from "./CRUDButtons";
-import CustomerDetailsModal from "./CustomerDetailsModal";
-import CustomerFormModal from "./CustomerFormModal";
-import DeleteConfirmModal from "./DeleteConfirmModal";
+import CustomerDetailsModal from "./modals/CustomerDetailsModal";
+import CustomerFormModal from "./modals/CustomerFormModal";
+import CustomerEditModal from "./modals/CustomerEditModal";
+import DeleteConfirmModal from "./modals/DeleteConfirmModal";
 import { type Customer } from "../../../types/Customer";
 
 export default function CustomersDashboard() {
@@ -14,6 +15,7 @@ export default function CustomersDashboard() {
 
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleSelectRow = (customer: Customer) => {
@@ -30,7 +32,7 @@ export default function CustomersDashboard() {
                 Kunden
             </h1>
 
-            <div className="mt-6 flex w-[90%] items-center justify-between">
+            <div className="mt-20 flex w-[90%] items-center justify-between">
 
                 <CustomerSearch
                     onSearch={setQuery}
@@ -40,6 +42,7 @@ export default function CustomersDashboard() {
                 <CRUDButtons
                     selectedCustomer={selectedCustomer}
                     onCreate={() => setCreateOpen(true)}
+                    onEdit={() => setEditOpen(true)}
                     onDelete={() => setDeleteOpen(true)}
                 />
 
@@ -64,6 +67,17 @@ export default function CustomersDashboard() {
                 <CustomerFormModal
                     onClose={() => setCreateOpen(false)}
                     onSuccess={handleRefresh}
+                />
+            )}
+
+            {editOpen && selectedCustomer && (
+                <CustomerEditModal
+                    customer={selectedCustomer}
+                    onClose={() => setEditOpen(false)}
+                    onSuccess={() => {
+                        setSelectedCustomer(null);
+                        handleRefresh();
+                    }}
                 />
             )}
 

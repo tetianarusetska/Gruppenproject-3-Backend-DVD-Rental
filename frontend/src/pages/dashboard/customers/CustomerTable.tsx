@@ -76,7 +76,7 @@ export default function CustomerTable({ query, onSelect, refreshKey }: CustomerT
     };
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="mt-10 flex flex-col gap-4">
 
             {isLoading ? (
                 <div className="rounded-2xl border border-zinc-800 bg-black p-10 text-center text-zinc-400">

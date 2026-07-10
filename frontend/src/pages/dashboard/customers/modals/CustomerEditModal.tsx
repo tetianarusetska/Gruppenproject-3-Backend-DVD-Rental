@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { customerService } from "../../../services/customer.service";
+import { customerService } from "../../../../services/customer.service";
+import { type Customer } from "../../../../types/Customer";
 
-interface CustomerFormModalProps {
+interface CustomerEditModalProps {
+    customer: Customer;
     onClose: () => void;
     onSuccess: () => void;
 }
@@ -18,20 +20,18 @@ interface FormState {
     phone: string;
 }
 
-const emptyForm: FormState = {
-    store_id: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    postal_code: "",
-    city_id: "",
-    district: "",
-    address: "",
-    phone: "",
-};
-
-export default function CustomerFormModal({ onClose, onSuccess }: CustomerFormModalProps) {
-    const [form, setForm] = useState<FormState>(emptyForm);
+export default function CustomerEditModal({ customer, onClose, onSuccess }: CustomerEditModalProps) {
+    const [form, setForm] = useState<FormState>({
+        store_id: String(customer.store_id ?? ""),
+        first_name: customer.first_name ?? "",
+        last_name: customer.last_name ?? "",
+        email: customer.email ?? "",
+        postal_code: customer.full_address?.postal_code ?? "",
+        city_id: String(customer.full_address?.city_id ?? ""),
+        district: customer.full_address?.district ?? "",
+        address: customer.full_address?.address ?? "",
+        phone: customer.full_address?.phone ?? "",
+    });
     const [isSaving, setIsSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -44,12 +44,14 @@ export default function CustomerFormModal({ onClose, onSuccess }: CustomerFormMo
         setError(null);
 
         try {
-            await customerService.create({
+            await customerService.update({
+                customer_id: customer.customer_id,
                 store_id: Number(form.store_id),
                 first_name: form.first_name,
                 last_name: form.last_name,
                 email: form.email,
                 full_address: {
+                    address_id: customer.full_address.address_id,
                     postal_code: form.postal_code,
                     city_id: Number(form.city_id),
                     district: form.district,
@@ -84,7 +86,7 @@ export default function CustomerFormModal({ onClose, onSuccess }: CustomerFormMo
 
                 <div className="flex items-start justify-between">
                     <h2 className="text-2xl font-['BebasNeue'] uppercase">
-                        Kunde erstellen
+                        Kunde bearbeiten
                     </h2>
                     <button
                         onClick={onClose}
