@@ -1,8 +1,12 @@
 import type { Request, Response } from "express";
 import categorySerivces from "./category.serivces.ts";
 
-const findCategory = async (req: Request<{ id: number }>, res: Response) => {
-    const { id } = req.params
+const findCategory = async (req: Request<{ id: string }>, res: Response) => {
+    const id = Number(req.params.id)
+
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid category ID provided" });
+    }
 
     const category = await categorySerivces.find(id)
 
