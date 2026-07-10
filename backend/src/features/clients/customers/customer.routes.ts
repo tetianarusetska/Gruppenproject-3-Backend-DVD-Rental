@@ -1,5 +1,6 @@
 import express from "express"
 import customerController from "./customer.controller.ts"
+import { customersErrorHandler } from "./customer.middleware.ts";
 
 const customerRouter = express.Router();
 
@@ -22,5 +23,9 @@ customerRouter.post("/new", customerController.create);
 customerRouter.get("/analytics/new-by-month", customerController.getByMonth);
 customerRouter.get("/analytics/by-country", customerController.getByCountry);
 customerRouter.get("/analytics/top-renters", customerController.getByRentals);
+
+// error handling 
+
+customerRouter.use(customersErrorHandler);
 
 export default customerRouter
