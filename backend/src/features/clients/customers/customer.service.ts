@@ -5,6 +5,8 @@ import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import addressService from "../addresses/address.service.ts"
 import type { CustomerRental } from "../types/customerRentals.ts";
 import type { CustomerPayment } from "../types/customerPayment.ts";
+import type { UpdateCustomerInput } from "../types/updateCustomerInput.ts";
+
 
 async function createCustomer(customer: CreateCustomerInput): Promise<Customer> {
 
@@ -16,6 +18,19 @@ async function createCustomer(customer: CreateCustomerInput): Promise<Customer> 
         customer,
         address.address_id
     );
+}
+
+async function updateCustomer(customer: UpdateCustomerInput): Promise<Customer> {
+
+    const existingCustomer = await customerRepo.find(customer.customer_id);
+
+    if (!existingCustomer) {
+        throw new CustomerNotFound(customer.customer_id);
+    }
+
+    const address = await addressService.update(customer.full_address); // ✅ один аргумент
+
+    return customerRepo.update(customer, address.address_id);
 }
 
 
@@ -68,6 +83,7 @@ export default {
     find: findCustomerById,
     delete: deleteCustomerById,
     create: createCustomer,
+    update: updateCustomer,
     search: searchCustomer,
     // Rentals, Statistics und so weiter
     getRentals: getCustomerRentals,
