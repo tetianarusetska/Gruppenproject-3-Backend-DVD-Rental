@@ -23,7 +23,7 @@ export const authService = {
   // Tipp: Erstelle dafür im Backend z.B. eine Route GET /auth/me oder nutze eine geschützte Testroute
   async checkSession(): Promise<boolean> {
     try {
-      const res = await fetch(`${API_URL}/health`, { // oder eine geschützte Route wie /rentals
+      const res = await fetch(`${API_URL}/auth/me`, { // oder eine geschützte Route wie /rentals
         method: "GET",
         credentials: "include", // Sendet das Session-Cookie mit
       });

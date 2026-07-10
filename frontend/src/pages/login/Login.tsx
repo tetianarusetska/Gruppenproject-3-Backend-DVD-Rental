@@ -12,7 +12,7 @@ export default function Login() {
         e.preventDefault();
         try {
             await login(username, password);
-            navigate("/");
+            navigate("/dashboard");
         } catch (err) {
             // Fehler wird automatisch im AuthContext abgefangen
             console.log(err)
@@ -75,8 +75,6 @@ export default function Login() {
 
                 </div>
             </div>
-
-            <Link to="/dashboard" className="mt-10 text-center text-gray-400 font-['BebasNeue'] text-lg">Dashboard</Link>
 
 
         </section>
