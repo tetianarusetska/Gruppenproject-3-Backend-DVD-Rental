@@ -3,6 +3,8 @@ import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
 import { type Customer } from "../types/customer.ts"
 import type { CustomerRental } from "../types/customerRentals.ts";
 import type { CustomerPayment } from "../types/customerPayment.ts";
+import type { UpdateCustomerInput } from "../types/updateCustomerInput.ts";
+
 
 const pool = getPostgresPool();
 
@@ -76,6 +78,34 @@ const createCustomer = async (customer: CreateCustomerInput, address_id: number)
 
     return await findCustomerById(
         result.rows[0].customer_id
+    ) as Customer;
+};
+
+const updateCustomer = async (customer: UpdateCustomerInput, address_id: number): Promise<Customer> => {
+
+    await pool.query(
+        `
+        UPDATE customer
+        SET
+            store_id = $1,
+            first_name = $2,
+            last_name = $3,
+            email = $4,
+            address_id = $5
+        WHERE customer_id = $6
+        `,
+        [
+            customer.store_id,
+            customer.first_name,
+            customer.last_name,
+            customer.email,
+            address_id,
+            customer.customer_id
+        ]
+    );
+
+    return await findCustomerById(
+        customer.customer_id
     ) as Customer;
 };
 
@@ -212,6 +242,7 @@ export default {
     find: findCustomerById,
     delete: deleteCustomerById,
     create: createCustomer,
+    update: updateCustomer,
     search: searchCustomer,
     // Rentals, Statistics und so weiter
     getRentals: getCustomerRentals,

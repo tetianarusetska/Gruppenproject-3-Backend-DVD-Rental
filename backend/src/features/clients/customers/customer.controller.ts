@@ -15,6 +15,17 @@ const createCustomer = async (req: Request, res: Response, next: NextFunction) =
 };
 
 
+const updateCustomer = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const updatedCustomer = await customerService.update(req.body);
+
+        return res.status(200).json(updatedCustomer);
+
+    } catch (err) {
+        next(err);
+    }
+};
+
 const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const customer = await customerService.getAll();
@@ -95,6 +106,7 @@ export default {
     delete: deleteCustomerById,
     create: createCustomer,
     search: searchCustomer,
+    update: updateCustomer,
     // Rentals, Statistics und so weiter
     getRentals: getCustomerRentals,
     getPayments: getCustomerPayments

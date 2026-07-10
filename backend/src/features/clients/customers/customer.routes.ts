@@ -11,6 +11,9 @@ customerRouter.get("/:customer_id/payments", customerController.getPayments);
 customerRouter.get("/:customer_id/rentals", customerController.getRentals);
 
 customerRouter.get("/:customer_id", customerController.find);
+
+// CRUD
+customerRouter.put("/update",customerController.update)
 customerRouter.delete("/:customer_id", customerController.delete);
 customerRouter.post("/new", customerController.create);
 

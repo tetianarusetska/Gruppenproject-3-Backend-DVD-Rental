@@ -14,6 +14,17 @@ const createAddress = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
+const updateAddress = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const updatedAddress = await addressService.update(req.body);
+
+    return res.status(200).json(updatedAddress);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 const getAllAddresses = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -26,5 +37,6 @@ const getAllAddresses = async (req: Request, res: Response, next: NextFunction) 
 
 export default {
   getAll: getAllAddresses,
-  create: createAddress
+  create: createAddress,
+  update: updateAddress
 }
