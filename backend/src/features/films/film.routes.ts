@@ -8,9 +8,9 @@ const router = express.Router()
 router.get("/", requireAuth, filmController.findAll)
 router.get("/availability", requireAuth, filmController.findAvailability)
 router.get("/:id", requireAuth, filmController.find)
-router.post("/create", filmController.create);
-router.put("/:id", filmController.update);
-router.delete("/:id", filmController.delete);
+router.post("/create", requireAuth, filmController.create);
+router.put("/:id", requireAuth, filmController.update);
+router.delete("/:id", requireAuth, filmController.delete);
 router.use(filmErrorHandler)
 
 export default router
