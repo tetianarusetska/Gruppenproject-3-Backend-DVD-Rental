@@ -1,5 +1,6 @@
  import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+ import { motion } from "framer-motion"
+ 
 
 type FilmAvailability = {
   film_id: number
@@ -52,14 +53,17 @@ export default function RentalDashboard() {
   )
 
   return (
-    <section className="min-h-screen w-full overflow-x-hidden bg-gray-950 px-3 py-8 text-white sm:px-6 md:px-8">
+    <section
+  className="min-h-screen w-full overflow-x-hidden bg-gray-950 px-3 py-8 text-white sm:px-6 md:px-8"
+  style={{ fontFamily: "Montserrat, sans-serif" }}
+>
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-8 max-w-full">
           <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-violet-400 sm:text-sm">
             DVD-Verleih
           </p>
 
-          <h1 className="mt-3 break-words text-2xl font-bold leading-tight sm:text-4xl md:text-6xl">
+          <h1 className="mt-3 break-words text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             Filmverwaltung
           </h1>
 
@@ -137,41 +141,51 @@ export default function RentalDashboard() {
                       initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25, delay: index * 0.04 }}
-                      className="overflow-hidden rounded-3xl border border-slate-800 bg-gray-950 transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/50 hover:shadow-2xl hover:shadow-violet-950/30"
+                      className="overflow-hidden rounded-3xl border border-slate-800 bg-gray-950 transition-all duration-300 hover:-translate-y-3 hover:border-violet-500/50 hover:shadow-2xl hover:shadow-violet-600/40"
                     >
-                      <div className="flex min-h-44 flex-col justify-between bg-gradient-to-br from-violet-700 via-slate-900 to-black p-5 sm:min-h-56 sm:p-6">
+                      <div className="relative flex min-h-64 flex-col justify-between overflow-hidden rounded-t-3xl bg-gradient-to-br from-violet-700 via-indigo-900 to-black p-6">
                         <div className="min-w-0">
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-violet-200 sm:text-xs">
-                            Filmcover
-                          </p>
+                          <div className="flex items-center justify-between">
+  <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
+    DVD
+  </span>
 
-                          <h3 className="mt-6 break-words text-xl font-black uppercase leading-tight tracking-tight sm:text-3xl">
+  <span className="rounded-full bg-black/30 px-3 py-1 text-[10px] uppercase tracking-widest text-violet-200">
+    Collection
+  </span>
+</div>
+
+                          <h3 className="mt-8 break-words text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl">
                             {title}
                           </h3>
                         </div>
 
-                        <p className="mt-6 text-sm text-violet-100">
+                        <p className="mt-8 rounded-xl bg-black/20 p-3 text-center text-sm font-semibold text-violet-100">
                           Verfügbar: {totalAvailable} / {totalCopies}
                         </p>
                       </div>
 
                       <div className="p-5 sm:p-6">
-                        <div className="mb-5 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+                        <div className="mb-6 flex flex-col items-center justify-center gap-4 md:flex-row md:justify-between">
                           <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 sm:text-sm">
                             Bestand
                           </p>
 
                           <span
-                            className={`rounded-full px-4 py-1 text-center text-xs font-bold uppercase tracking-wide ${
-                              totalAvailable > 0
-                                ? "bg-emerald-500/10 text-emerald-400"
-                                : "bg-red-500/10 text-red-400"
-                            }`}
-                          >
-                            {totalAvailable > 0
-                              ? "Verfügbar"
-                              : "Nicht verfügbar"}
-                          </span>
+  className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest ${
+    totalAvailable >= 5
+      ? "bg-emerald-500/20 text-emerald-400"
+      : totalAvailable > 0
+      ? "bg-yellow-500/20 text-yellow-300"
+      : "bg-red-500/20 text-red-400"
+  }`}
+>
+  {totalAvailable >= 5
+    ? "Verfügbar"
+    : totalAvailable > 0
+    ? "Wenig Bestand"
+    : "Nicht verfügbar"}
+</span>
                         </div>
 
                         <div className="space-y-4">
@@ -180,19 +194,19 @@ export default function RentalDashboard() {
                               key={`${store.film_id}-${store.store_id}-${store.available_copies}`}
                               className="rounded-2xl border border-slate-800 bg-slate-900 p-4"
                             >
-                              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                              <div className="flex items-center justify-between gap-4">
                                 <div className="min-w-0">
-                                  <p className="text-sm font-semibold sm:text-base">
-                                    Store {store.store_id}
-                                  </p>
-                                  <p className="mt-1 text-xs text-gray-500 sm:text-sm">
-                                    {store.total_copies} Exemplare gesamt
-                                  </p>
+                                  <p className="text-base font-bold tracking-wide text-white">
+  Store {store.store_id}
+</p>
+                                  <p className="mt-2 text-sm text-gray-300">
+  Bestand: {store.total_copies} DVDs
+</p>
                                 </div>
 
-                                <div className="rounded-xl bg-gray-950 px-4 py-3 text-center">
+                                <div className="flex w-20 flex-col items-center justify-center rounded-xl border border-violet-500/20 bg-black/30 px-2 py-2">
                                   <p
-                                    className={`text-2xl font-bold ${
+                                    className={`text-3xl font-bold leading-none ${
                                       Number(store.available_copies) > 0
                                         ? "text-emerald-400"
                                         : "text-red-400"
@@ -200,9 +214,9 @@ export default function RentalDashboard() {
                                   >
                                     {store.available_copies}
                                   </p>
-                                  <p className="text-[10px] uppercase tracking-widest text-gray-500 sm:text-xs">
-                                    verfügbar
-                                  </p>
+                                  <p className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.15em] text-gray-400/80">
+    verfügbar
+</p>
                                 </div>
                               </div>
                             </div>
