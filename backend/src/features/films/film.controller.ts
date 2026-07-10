@@ -5,7 +5,7 @@ const findFilm = async (req: Request<{ id: string }>, res: Response) => {
     const id = Number(req.params.id);
 
     if (isNaN(id)) {
-        return res.status(400).json({ error: "Ungültige Film-ID übergeben" });
+        return res.status(400).json({ error: "Invalid movie ID provided" });
     }
 
     const film = await filmServices.find(id)
@@ -27,8 +27,37 @@ const findFilmAvailability = async (_req: Request, res: Response) => {
   res.json(films)
 }
 
+const createFilm = async (req: Request, res: Response) => {
+    const createdFilm = await filmServices.create(req.body)
+
+    return res.status(201).json(createdFilm)
+}
+
+const updateFilm = async (req: Request, res: Response) => {
+    const filmId = Number(req.params.id)
+    if (isNaN(filmId)) {
+        return res.status(400).json({ error: "Invalid movie ID provided." })
+    }
+
+    const updatedFilm = await filmServices.update(filmId, req.body)
+    return res.status(200).json(updatedFilm)
+}
+
+const deleteFilm = async (req: Request, res: Response) => {
+    const filmId = Number(req.params.id);
+    if (isNaN(filmId)) {
+        return res.status(400).json({ error: "Invalid movie ID provided." });
+    }
+
+    await filmServices.delete(filmId)
+    return res.status(204).send()
+}
+
 export default {
     find: findFilm,
     findAll: findAllFilms,
-    findAvailability: findFilmAvailability
+    findAvailability: findFilmAvailability,
+    create: createFilm,
+    update: updateFilm,
+    delete: deleteFilm
 }
