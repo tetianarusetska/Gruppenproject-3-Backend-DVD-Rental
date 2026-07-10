@@ -78,7 +78,7 @@ const deleteCustomerById = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-// Rentals, Statistics und so weiter
+// Rentals, Payments und so weiter
 
 const getCustomerRentals = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
     try {
@@ -100,6 +100,36 @@ const getCustomerPayments = async (req: Request<{ customer_id: number }>, res: R
     }
 }
 
+// Statistics und so weiter
+
+const getNewCustomersByMonth = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data = await customerService.getByMonth();
+        res.status(200).json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const getCustomersByCountry = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data = await customerService.getByCountry();
+        res.status(200).json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const getTopCustomersByRentals = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const limit = req.query.limit ? Number(req.query.limit) : undefined;
+        const data = await customerService.getByRentals(limit);
+        res.status(200).json(data);
+    } catch (err) {
+        next(err);
+    }
+};
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -109,5 +139,9 @@ export default {
     update: updateCustomer,
     // Rentals, Statistics und so weiter
     getRentals: getCustomerRentals,
-    getPayments: getCustomerPayments
+    getPayments: getCustomerPayments,
+    // Statistics und so weiter
+    getByMonth: getNewCustomersByMonth, 
+    getByCountry: getCustomersByCountry,
+    getByRentals: getTopCustomersByRentals
 }
