@@ -80,8 +80,8 @@ const findAllFilms = async (): Promise<FilmList[]> => {
 }
 
 const findFilmAvailability = async (title: string): Promise<FilmAvailability[]> => {
-  const result = await pool.query<FilmAvailability>(
-    `
+    const result = await pool.query<FilmAvailability>(
+        `
     SELECT
       f.film_id,
       f.title,
@@ -100,10 +100,10 @@ const findFilmAvailability = async (title: string): Promise<FilmAvailability[]> 
     GROUP BY f.film_id, f.title, i.store_id
     ORDER BY f.title ASC, i.store_id ASC;
     `,
-    [`%${title}%`]
-  )
+        [`%${title}%`]
+    )
 
-  return result.rows
+    return result.rows
 }
 
 const createFilm = async (input: CreateFilmInput): Promise<number> => {
@@ -163,7 +163,7 @@ const createFilm = async (input: CreateFilmInput): Promise<number> => {
         }
 
         await client.query("COMMIT")
-    } catch(error) {
+    } catch (error) {
         await client.query("ROLLBACK")
         throw error
     } finally {
@@ -178,8 +178,8 @@ const updateFilm = async (filmId: number, input: CreateFilmInput) => {
     try {
         await client.query("BEGIN")
 
-        const updateFilmQuery = 
-        `
+        const updateFilmQuery =
+            `
         UPDATE public.film 
             SET 
                 title = $1, 
@@ -285,7 +285,7 @@ const deleteFilm = async (filmId: number): Promise<boolean> => {
         const result = await client.query("DELETE FROM public.film WHERE film_id = $1", [filmId])
 
         await client.query("COMMIT")
-        
+
         return result.rowCount ? result.rowCount > 0 : false
     } catch (error) {
         await client.query("ROLLBACK")
@@ -294,11 +294,105 @@ const deleteFilm = async (filmId: number): Promise<boolean> => {
         client.release()
     }
 }
-    
+
+const getStatistics = async () => {
+    const result = await pool.query(
+        `
+        SELECT
+        (
+            SELECT COUNT(*)::int
+            FROM public.film
+        ) AS "totalFilms",
+        (
+            SELECT COUNT(*)::int
+            FROM public.inventory
+        ) AS "totalCopies",
+        (
+            SELECT COUNT(*)::int
+            FROM public.inventory i
+            LEFT JOIN public.rental r
+                ON i.inventory_id = r.inventory_id
+                AND r.return_date IS NULL
+            WHERE r.rental_id IS NULL
+        ) AS "availableCopies",
+        (
+            SELECT ROUND(AVG(length))::int
+            FROM public.film
+        ) AS "avgLength",
+        (
+            SELECT ROUND(AVG(rental_rate)::numeric,2)
+            FROM public.film
+        ) AS "avgRentalRate",
+        (
+            SELECT rating
+            FROM public.film
+            GROUP BY rating
+            ORDER BY COUNT(*) DESC
+            LIMIT 1
+        ) AS "topRating",
+        -- TOP RENTED FILMS
+        (
+            SELECT json_agg(t)
+            FROM (
+                SELECT
+                    f.title,
+                    COUNT(r.rental_id)::int AS rentals
+                FROM public.film f
+                JOIN public.inventory i
+                    ON f.film_id = i.film_id
+                JOIN public.rental r
+                    ON i.inventory_id = r.inventory_id
+                GROUP BY f.film_id
+                ORDER BY rentals DESC
+                LIMIT 10
+            ) t
+        ) AS "topFilms",
+        -- RATINGS
+        (
+            SELECT json_agg(t)
+            FROM (
+                SELECT
+                    rating,
+                    COUNT(*)::int AS count
+                FROM public.film
+                GROUP BY rating
+                ORDER BY count DESC
+            ) t
+        ) AS "ratings",
+        -- RENTALS BY MONTH
+        (
+            SELECT json_agg(t)
+            FROM (
+                SELECT
+                    TO_CHAR(
+                        DATE_TRUNC(
+                            'month',
+                            rental_date
+                        ),
+                        'YYYY-MM'
+                    ) AS month,
+                    COUNT(*)::int AS count
+                FROM public.rental
+                GROUP BY
+                    DATE_TRUNC(
+                        'month',
+                        rental_date
+                    )
+                ORDER BY month
+            ) t
+        ) AS "rentalsByMonth"
+        `
+    );
+    return result.rows[0];
+};
+
+
+
 export default {
     find: findFilm,
     findAll: findAllFilms,
     findAvailability: findFilmAvailability,
+    getStatistics,
     create: createFilm,
     update: updateFilm,
     delete: deleteFilm

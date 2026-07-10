@@ -20,11 +20,11 @@ const findAllFilms = async (_: Request, res: Response) => {
 }
 
 const findFilmAvailability = async (_req: Request, res: Response) => {
-  const title = String(_req.query.title ?? "")
+    const title = String(_req.query.title ?? "")
 
-  const films = await filmServices.findAvailability(title)
+    const films = await filmServices.findAvailability(title)
 
-  res.json(films)
+    res.json(films)
 }
 
 const createFilm = async (req: Request, res: Response) => {
@@ -60,10 +60,16 @@ const deleteFilm = async (req: Request, res: Response) => {
     }
 }
 
+const getStatistics = async (_req: Request, res: Response) => {
+    const statistics = await filmServices.getStatistics();
+    res.json(statistics);
+};
+
 export default {
     find: findFilm,
     findAll: findAllFilms,
     findAvailability: findFilmAvailability,
+    getStatistics,
     create: createFilm,
     update: updateFilm,
     delete: deleteFilm

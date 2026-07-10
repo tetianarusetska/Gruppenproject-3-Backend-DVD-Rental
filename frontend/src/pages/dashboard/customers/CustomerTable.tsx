@@ -199,13 +199,16 @@ export default function CustomerTable({ query, onSelect, refreshKey }: CustomerT
 
                             {getVisiblePages().map((page, index) =>
                                 page === "..." ? (
-                                    <span key={index} className="text-zinc-600">
+                                    <span
+                                        key={`dots-${index}`}
+                                        className="text-zinc-600"
+                                    >
                                         ...
                                     </span>
                                 ) : (
                                     <button
-                                        key={page}
-                                        onClick={() => setCurrentPage(page)}
+                                        key={`page-${page}-${index}`}
+                                        onClick={() => setCurrentPage(Number(page))}
                                         className={
                                             currentPage === page
                                                 ? "text-white font-semibold"
