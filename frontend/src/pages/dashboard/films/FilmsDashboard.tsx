@@ -5,11 +5,14 @@ import Search from "./Search";
 import FilmTable from "./FilmTable";
 import Pagination from "./Pagination";
 import Modal from "./modals/Modal";
+import FilmModal from "./modals/FilmModal";
 
 import type { Film } from "./types/Film";
 import type { FilmList } from "./types/FilmList";
+import type { FilmAvailability } from "./FilmTable";
 
 import { filmService } from "../../../services/film.service";
+import FilmStatistics from "./FilmStatistics";
 
 export default function FilmsDashboard() {
     const [films, setFilms] = useState<FilmList[]>([]);
@@ -21,23 +24,57 @@ export default function FilmsDashboard() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [modalError, setModalError] = useState<string | null>(null);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [availability, setAvailability] = useState<Record<number, FilmAvailability>>({});
+    const [sort, setSort] = useState("default");
 
     const itemsPerPage = 15;
 
     const loadFilms = async () => {
         try {
             setLoading(true);
+
             const data = await filmService.getAll();
-            setFilms(data);
+
+            const uniqueFilms = Array.from(
+                new Map(
+                    data.map(film => [film.film_id, film])
+                ).values()
+            );
+
+            setFilms(uniqueFilms);
+
         } catch (err) {
-            if (err instanceof Error) setError(err.message);
+            if (err instanceof Error) {
+                setError(err.message);
+            }
         } finally {
             setLoading(false);
         }
     };
 
+    const loadAvailability = async () => {
+        try {
+            const data = await filmService.getAvailability();
+            const map: Record<number, FilmAvailability> = {};
+
+            for (const entry of data) {
+                const existing = map[entry.film_id];
+                map[entry.film_id] = {
+                    total_copies: (existing?.total_copies ?? 0) + entry.total_copies,
+                    available_copies: (existing?.available_copies ?? 0) + entry.available_copies,
+                };
+            }
+
+            setAvailability(map);
+        } catch (err) {
+            console.error("Failed to load film availability:", err);
+        }
+    };
+
     useEffect(() => {
         loadFilms();
+        loadAvailability();
     }, []);
 
     const handleCreate = () => {
@@ -52,6 +89,7 @@ export default function FilmsDashboard() {
 
             const data = await filmService.getById(film.film_id);
             setFilmDetails(data);
+            setShowDetailsModal(true);
 
         } catch (err) {
             if (err instanceof Error) setError(err.message);
@@ -65,8 +103,10 @@ export default function FilmsDashboard() {
 
         try {
             setLoading(true);
-
-            const data = await filmService.getById(selectedFilm.film_id);
+            const data =
+                filmDetails && filmDetails.film_id === selectedFilm.film_id
+                    ? filmDetails
+                    : await filmService.getById(selectedFilm.film_id);
 
             setFilmDetails(data);
             setModalMode("edit");
@@ -87,8 +127,47 @@ export default function FilmsDashboard() {
         film.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const totalItems = filteredFilms.length;
+    const sortedFilms = [...filteredFilms].sort((a, b) => {
+
+        if (sort === "year_old") {
+            return a.release_year - b.release_year;
+        }
+
+        if (sort === "year_new") {
+            return b.release_year - a.release_year;
+        }
+
+        if (sort === "length_long") {
+            return b.length - a.length;
+        }
+
+        if (sort === "length_short") {
+            return a.length - b.length;
+        }
+
+        if (sort === "title_desc") {
+            return b.title.localeCompare(a.title);
+        }
+
+        if (sort === "default") {
+            return 0;
+        }
+
+        return a.title.localeCompare(b.title);
+    });
+
+    const totalItems = sortedFilms.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    useEffect(() => {
+        if (totalPages === 0) {
+            if (page !== 1) setPage(1);
+            return;
+        }
+        if (page > totalPages) {
+            setPage(totalPages);
+        }
+    }, [totalPages, page]);
 
     const startItem = totalItems === 0 ? 0 : (page - 1) * itemsPerPage + 1;
 
@@ -97,7 +176,7 @@ export default function FilmsDashboard() {
         totalItems
     );
 
-    const currentFilms = filteredFilms.slice(
+    const currentFilms = sortedFilms.slice(
         (page - 1) * itemsPerPage,
         page * itemsPerPage
     );
@@ -109,7 +188,13 @@ export default function FilmsDashboard() {
                 Filme
             </h1>
 
-            <div className="mt-20 flex w-[90%] items-center justify-between">
+            <div className="
+    mt-20
+    flex
+    w-[90%]
+    items-center
+    gap-6
+">
 
                 <Search
                     value={searchQuery}
@@ -118,6 +203,81 @@ export default function FilmsDashboard() {
                         setPage(1);
                     }}
                 />
+
+                <div className="relative">
+
+                    <select
+                        value={sort}
+                        onChange={(e) => {
+                            setSort(e.target.value);
+                            setPage(1);
+                        }}
+                        className="
+            appearance-none
+            w-48
+            rounded-2xl
+            border
+            border-zinc-800
+            bg-black
+            px-5
+            py-2.5
+            pr-10
+            text-sm
+            text-zinc-300
+            font-['Montserrat']
+            outline-none
+            transition
+            hover:border-zinc-600
+            focus:border-zinc-500
+            cursor-pointer
+        "
+                    >
+                        <option value="default">
+                            Sortierung
+                        </option>
+
+                        <option value="title_asc">
+                            Titel A-Z
+                        </option>
+
+                        <option value="title_desc">
+                            Titel Z-A
+                        </option>
+
+                        <option value="year_new">
+                            Neueste Filme
+                        </option>
+
+                        <option value="year_old">
+                            Älteste Filme
+                        </option>
+
+                        <option value="length_long">
+                            Längste Filme
+                        </option>
+
+                        <option value="length_short">
+                            Kürzeste Filme
+                        </option>
+
+                    </select>
+
+
+                    <span
+                        className="
+            pointer-events-none
+            absolute
+            right-4
+            top-1/2
+            -translate-y-1/2
+            text-zinc-500
+            text-xs
+        "
+                    >
+                        ▼
+                    </span>
+
+                </div>
 
                 <Buttons
                     hasSelection={selectedFilm !== null}
@@ -144,6 +304,7 @@ export default function FilmsDashboard() {
                 films={currentFilms}
                 selectedFilm={selectedFilm}
                 onSelect={handleSelectFilm}
+                availability={availability}
             />
 
             <Pagination
@@ -154,6 +315,15 @@ export default function FilmsDashboard() {
                 totalItems={totalItems}
                 onChange={setPage}
             />
+
+            <FilmStatistics />
+
+            {showDetailsModal && filmDetails && (
+                <FilmModal
+                    film={filmDetails}
+                    onClose={() => setShowDetailsModal(false)}
+                />
+            )}
 
             {modalMode && (
                 <Modal
@@ -181,6 +351,7 @@ export default function FilmsDashboard() {
                                 setSelectedFilm(null);
                                 setFilmDetails(null);
                                 setModalMode(null);
+                                loadAvailability();
                                 return;
                             }
 
@@ -198,6 +369,7 @@ export default function FilmsDashboard() {
                             const updatedFilms = await filmService.getAll();
                             setFilms(updatedFilms);
                             setModalMode(null);
+                            loadAvailability();
                         } catch (err) {
                             if (err instanceof Error) {
                                 setModalError(err.message);

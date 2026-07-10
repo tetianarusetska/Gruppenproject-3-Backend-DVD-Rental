@@ -3,6 +3,37 @@ import type { FilmList } from "../pages/dashboard/films/types/FilmList";
 
 const API_URL = "http://localhost:3000";
 
+export interface FilmAvailabilityEntry {
+    film_id: number;
+    title: string;
+    store_id: number;
+    total_copies: number;
+    available_copies: number;
+}
+
+export interface FilmStatistics {
+    totalFilms: number;
+    totalCopies: number;
+    availableCopies: number;
+    avgLength: number;
+    avgRentalRate: string;
+    topRating: string;
+
+    topFilms: {
+        title: string;
+        rentals: number;
+    }[];
+
+    ratings: {
+        rating: string;
+        count: number;
+    }[];
+
+    rentalsByMonth: {
+        month: string;
+        count: number;
+    }[];
+}
 
 export const filmService = {
 
@@ -11,40 +42,47 @@ export const filmService = {
             method: "GET",
             credentials: "include",
         });
-
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
             throw new Error(
                 errorData.error || "Filme konnten nicht geladen werden."
             );
         }
-
         return res.json();
     },
 
-
-
     async getById(id: number): Promise<Film> {
-
         const res = await fetch(`${API_URL}/films/${id}`, {
             method: "GET",
             credentials: "include",
         });
-
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
             throw new Error(
                 errorData.error || "Film konnte nicht geladen werden."
             );
         }
+        return res.json();
+    },
 
+
+    async getAvailability(): Promise<FilmAvailabilityEntry[]> {
+        const res = await fetch(`${API_URL}/films/availability`, {
+            method: "GET",
+            credentials: "include",
+        });
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            throw new Error(
+                errorData.error || "Verfügbarkeit konnte nicht geladen werden."
+            );
+        }
         return res.json();
     },
 
 
 
     async create(payload: Film): Promise<Film> {
-
         const res = await fetch(`${API_URL}/films/create`, {
             method: "POST",
             credentials: "include",
@@ -53,14 +91,12 @@ export const filmService = {
             },
             body: JSON.stringify(payload),
         });
-
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
             throw new Error(
                 errorData.error || "Film konnte nicht erstellt werden."
             );
         }
-
         return res.json();
     },
 
@@ -112,23 +148,20 @@ export const filmService = {
         }
     },
 
-
-    async getAvailability(title: string) {
-
+    async getStatistics(): Promise<FilmStatistics> {
         const res = await fetch(
-            `${API_URL}/films/availability?title=${encodeURIComponent(title)}`,
+            `${API_URL}/films/statistics`,
             {
                 method: "GET",
-                credentials: "include",
+                credentials: "include"
             }
         );
-
         if (!res.ok) {
             throw new Error(
-                "Verfügbarkeit konnte nicht geladen werden."
+                "Statistiken konnten nicht geladen werden."
             );
         }
         return res.json();
-    }
+    },
 
 };

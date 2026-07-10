@@ -6,6 +6,7 @@ import { requireAuth } from "../auth/auth.middleware.ts"
 const router = express.Router()
 
 router.get("/", requireAuth, filmController.findAll)
+router.get("/statistics", requireAuth, filmController.getStatistics)
 router.get("/availability", requireAuth, filmController.findAvailability)
 router.get("/:id", requireAuth, filmController.find)
 router.post("/create", requireAuth, filmController.create);

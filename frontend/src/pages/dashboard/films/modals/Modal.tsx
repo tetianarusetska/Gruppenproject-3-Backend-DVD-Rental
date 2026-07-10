@@ -3,6 +3,7 @@ import type { Film } from "../types/Film";
 
 type ModalMode = "create" | "edit" | "delete";
 
+const RATINGS = ["G", "PG", "PG-13", "R", "NC-17"];
 
 interface FilmModalProps {
     mode: ModalMode;
@@ -123,6 +124,13 @@ export default function Modal({
                         ✕
                     </button>
                 </div>
+
+                {error && (
+                    <p className="mt-4 rounded-xl border border-red-900 bg-red-950/40 p-3 text-sm text-red-400">
+                        {error}
+                    </p>
+                )}
+
                 <div className="mt-6 space-y-4">
                     <input
                         value={form.title ?? ""}
@@ -130,20 +138,86 @@ export default function Modal({
                         placeholder="Titel"
                         className="w-full border border-zinc-800 bg-black px-4 py-2"
                     />
+
                     <textarea
                         value={form.description ?? ""}
                         onChange={(e) => change("description", e.target.value)}
                         placeholder="Beschreibung"
                         className="w-full border border-zinc-800 bg-black px-4 py-2"
                     />
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <input
+                            type="number"
+                            value={form.release_year ?? ""}
+                            onChange={(e) => change("release_year", Number(e.target.value))}
+                            placeholder="Release Jahr"
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        />
+
+                        <input
+                            type="number"
+                            value={form.length ?? ""}
+                            onChange={(e) => change("length", Number(e.target.value))}
+                            placeholder="Länge (min)"
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        />
+
+                        <input
+                            type="number"
+                            value={form.rental_duration ?? ""}
+                            onChange={(e) => change("rental_duration", Number(e.target.value))}
+                            placeholder="Mietdauer (Tage)"
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        />
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            value={form.rental_rate ?? ""}
+                            onChange={(e) => change("rental_rate", e.target.value)}
+                            placeholder="Mietrate ($)"
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        />
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            value={form.replacement_cost ?? ""}
+                            onChange={(e) => change("replacement_cost", e.target.value)}
+                            placeholder="Ersatzkosten ($)"
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        />
+
+                        <select
+                            value={form.rating ?? "G"}
+                            onChange={(e) => change("rating", e.target.value)}
+                            className="w-full border border-zinc-800 bg-black px-4 py-2"
+                        >
+                            {RATINGS.map((r) => (
+                                <option key={r} value={r}>
+                                    {r}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                     <input
-                        type="number"
-                        value={form.release_year ?? ""}
-                        onChange={(e) => change("release_year", Number(e.target.value))}
-                        placeholder="Release Jahr"
+                        value={(form.special_features ?? []).join(", ")}
+                        onChange={(e) =>
+                            change(
+                                "special_features",
+                                e.target.value
+                                    .split(",")
+                                    .map((s) => s.trim())
+                                    .filter((s) => s.length > 0)
+                            )
+                        }
+                        placeholder="Features (Komma-getrennt, z.B. Trailers, Commentaries)"
                         className="w-full border border-zinc-800 bg-black px-4 py-2"
                     />
                 </div>
+
                 <button
                     onClick={() => onSubmit(form as Film)}
                     className="mt-8 rounded-xl bg-white px-6 py-2 text-black"

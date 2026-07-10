@@ -17,14 +17,14 @@ const findAllFilms = async (): Promise<FilmList[]> => {
 }
 
 const findFilmAvailability = async (
-  title: string
+    title: string
 ): Promise<FilmAvailability[]> => {
-  return await filmRepo.findAvailability(title)
+    return await filmRepo.findAvailability(title)
 }
 
 const createFilm = async (input: CreateFilmInput): Promise<Film> => {
     const newFilmId = await filmRepo.create(input);
-    
+
     const film = await filmRepo.find(newFilmId);
     if (!film) {
         throw new Error("A film was created but could not be uploaded.");
@@ -39,7 +39,7 @@ const updateFilm = async (filmId: number, input: CreateFilmInput): Promise<Film>
     }
 
     await filmRepo.update(filmId, input);
-    
+
     const updatedFilm = await filmRepo.find(filmId);
     if (!updatedFilm) {
         throw new Error("Error loading the updated film.");
@@ -59,10 +59,16 @@ const deleteFilm = async (filmId: number): Promise<void> => {
     }
 }
 
+const getStatistics = async () => {
+    return await filmRepo.getStatistics();
+};
+
+
 export default {
     find: findFilm,
     findAll: findAllFilms,
     findAvailability: findFilmAvailability,
+    getStatistics,
     create: createFilm,
     update: updateFilm,
     delete: deleteFilm
