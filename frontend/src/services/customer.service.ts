@@ -34,6 +34,7 @@ export const customerService = {
     return res.json();
   },
 
+  // Rentals, Payments
 
   async getRentals(customerId: number): Promise<Rental[]> {
     const res = await fetch(`${API_URL}/customers/${customerId}/rentals`, {
@@ -61,6 +62,8 @@ export const customerService = {
     }
     return res.json();
   },
+
+  // CRUD 
 
   async create(payload: {
     store_id: number;
@@ -127,6 +130,48 @@ export const customerService = {
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       throw new Error(errorData.error || "Kunde konnte nicht aktualisiert werden.");
+    }
+    return res.json();
+  },
+
+  // Statistics
+  
+  async getNewCustomersByMonth(): Promise<{ month: string; count: number }[]> {
+    const res = await fetch(`${API_URL}/customers/analytics/new-by-month`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Statistik konnte nicht geladen werden.");
+    }
+    return res.json();
+  },
+
+  async getCustomersByCountry(): Promise<{ country: string; count: number }[]> {
+    const res = await fetch(`${API_URL}/customers/analytics/by-country`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Statistik konnte nicht geladen werden.");
+    }
+    return res.json();
+  },
+
+  async getTopCustomersByRentals(limit?: number): Promise<{ customer_id: number; first_name: string; last_name: string; rental_count: number }[]> {
+    const query = limit ? `?limit=${limit}` : "";
+    const res = await fetch(`${API_URL}/customers/analytics/top-renters${query}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Statistik konnte nicht geladen werden.");
     }
     return res.json();
   },

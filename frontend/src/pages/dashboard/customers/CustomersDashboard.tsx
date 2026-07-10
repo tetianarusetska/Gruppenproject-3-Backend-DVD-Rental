@@ -7,6 +7,7 @@ import CustomerFormModal from "./modals/CustomerFormModal";
 import CustomerEditModal from "./modals/CustomerEditModal";
 import DeleteConfirmModal from "./modals/DeleteConfirmModal";
 import { type Customer } from "../../../types/Customer";
+import CustomerStatistic from "./CustomerStatistic";
 
 export default function CustomersDashboard() {
     const [query, setQuery] = useState("");
@@ -26,7 +27,7 @@ export default function CustomersDashboard() {
     const handleRefresh = () => setRefreshKey((k) => k + 1);
 
     return (
-        <div className="h-screen w-screen">
+        <div className="min-h-screen min-w-screen">
 
             <h1 className="uppercase font-['BebasNeue'] text-6xl">
                 Kunden
@@ -55,6 +56,8 @@ export default function CustomersDashboard() {
                     onSelect={handleSelectRow}
                 />
             </div>
+
+            <CustomerStatistic />
 
             {detailsOpen && (
                 <CustomerDetailsModal

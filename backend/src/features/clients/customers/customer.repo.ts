@@ -166,7 +166,7 @@ const deleteCustomerById = async (customer_id: number): Promise<Customer | null>
 };
 
 
-// Rentals, Statistics und so weiter
+// Rentals, Payments und so weiter
 
 const getCustomerRentals = async (customer_id: number): Promise<CustomerRental[]> => {
     const result = await pool.query(
@@ -237,6 +237,60 @@ const getCustomerPayments = async (customer_id: number): Promise<CustomerPayment
     }));
 };
 
+
+// Statistics und so weiter
+
+const getNewCustomersByMonth = async (): Promise<{ month: string; count: number }[]> => {
+    const result = await pool.query(
+        `
+        SELECT
+            TO_CHAR(create_date, 'YYYY-MM') AS month,
+            COUNT(*)::int AS count
+        FROM customer
+        GROUP BY month
+        ORDER BY month
+        `
+    );
+    return result.rows;
+};
+
+const getCustomersByCountry = async (): Promise<{ country: string; count: number }[]> => {
+    const result = await pool.query(
+        `
+        SELECT
+            co.country,
+            COUNT(*)::int AS count
+        FROM customer c
+        JOIN address a ON c.address_id = a.address_id
+        JOIN city ci ON a.city_id = ci.city_id
+        JOIN country co ON ci.country_id = co.country_id
+        GROUP BY co.country
+        ORDER BY count DESC
+        `
+    );
+    return result.rows;
+};
+
+const getTopCustomersByRentals = async (limit: number = 10): Promise<{ customer_id: number; first_name: string; last_name: string; rental_count: number }[]> => {
+    const result = await pool.query(
+        `
+        SELECT
+            c.customer_id,
+            c.first_name,
+            c.last_name,
+            COUNT(r.rental_id)::int AS rental_count
+        FROM customer c
+        JOIN rental r ON r.customer_id = c.customer_id
+        GROUP BY c.customer_id, c.first_name, c.last_name
+        ORDER BY rental_count DESC
+        LIMIT $1
+        `,
+        [limit]
+    );
+    return result.rows;
+};
+
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -246,5 +300,9 @@ export default {
     search: searchCustomer,
     // Rentals, Statistics und so weiter
     getRentals: getCustomerRentals,
-    getPayments: getCustomerPayments
+    getPayments: getCustomerPayments,
+    // Statistics und so weiter
+    getByMonth: getNewCustomersByMonth,
+    getByCountry: getCustomersByCountry,
+    getByRentals: getTopCustomersByRentals
 }

@@ -66,7 +66,7 @@ async function deleteCustomerById(customer_id: number): Promise<Customer | null>
     }
 }
 
-// Rentals, Statistics und so weiter
+// Rentals, Paments und so weiter
 
 const getCustomerRentals = async (customer_id: number): Promise<CustomerRental[]> => {
     await findCustomerById(customer_id);
@@ -78,6 +78,21 @@ const getCustomerPayments = async (customer_id: number): Promise<CustomerPayment
     return await customerRepo.getPayments(customer_id);
 };
 
+// Statistics und so weiter
+
+const getNewCustomersByMonth = async () => {
+    return customerRepo.getByMonth();
+};
+
+const getCustomersByCountry = async () => {
+    return customerRepo.getByCountry();
+};
+
+const getTopCustomersByRentals = async (limit?: number) => {
+    return customerRepo.getByRentals(limit);
+};
+
+
 export default {
     getAll: getAllCustomers,
     find: findCustomerById,
@@ -85,7 +100,11 @@ export default {
     create: createCustomer,
     update: updateCustomer,
     search: searchCustomer,
-    // Rentals, Statistics und so weiter
+    // Rentals, Payments und so weiter
     getRentals: getCustomerRentals,
-    getPayments: getCustomerPayments
+    getPayments: getCustomerPayments,
+    // Statistics und so weiter
+    getByMonth: getNewCustomersByMonth,
+    getByCountry: getCustomersByCountry,
+    getByRentals: getTopCustomersByRentals
 }
