@@ -47,7 +47,7 @@ const searchCustomer = async (req: Request, res: Response, next: NextFunction) =
 }
 
 
-const findCustomerById = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+const findCustomerById = async (req: Request<{ customer_id: string }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
         const customer = await customerService.find(customerId);
@@ -80,7 +80,7 @@ const deleteCustomerById = async (req: Request, res: Response, next: NextFunctio
 
 // Rentals, Payments und so weiter
 
-const getCustomerRentals = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+const getCustomerRentals = async (req: Request<{ customer_id: string }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
         const rentals = await customerService.getRentals(customerId);
@@ -90,7 +90,7 @@ const getCustomerRentals = async (req: Request<{ customer_id: number }>, res: Re
     }
 }
 
-const getCustomerPayments = async (req: Request<{ customer_id: number }>, res: Response, next: NextFunction) => {
+const getCustomerPayments = async (req: Request<{ customer_id: string }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
         const payments = await customerService.getPayments(customerId);

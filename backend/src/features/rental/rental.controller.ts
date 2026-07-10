@@ -2,8 +2,12 @@ import { type Request, type Response } from "express"
 import type { Rental } from "./types/Rental.ts";
 import rentalServices from "./rental.services.ts";
 
-const findRental = async (req: Request<{ id: number }>, res: Response) => {
-    const { id } = req.params
+const findRental = async (req: Request<{ id: string }>, res: Response) => {
+    const id = Number(req.params.id)
+
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid rental ID provided" });
+    }
 
     const rental = await rentalServices.find(id)
 

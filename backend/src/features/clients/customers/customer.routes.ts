@@ -1,28 +1,29 @@
 import express from "express"
 import customerController from "./customer.controller.ts"
 import { customersErrorHandler } from "./customer.middleware.ts";
+import { requireAuth } from "../../auth/auth.middleware.ts"
 
 const customerRouter = express.Router();
 
-customerRouter.get("/all", customerController.getAll);
-customerRouter.get("/search", customerController.search);
+customerRouter.get("/all", requireAuth, customerController.getAll);
+customerRouter.get("/search", requireAuth, customerController.search);
 
 // Rentals, Paments und so weiter
-customerRouter.get("/:customer_id/payments", customerController.getPayments);
-customerRouter.get("/:customer_id/rentals", customerController.getRentals);
+customerRouter.get("/:customer_id/payments", requireAuth, customerController.getPayments);
+customerRouter.get("/:customer_id/rentals", requireAuth, customerController.getRentals);
 
-customerRouter.get("/:customer_id", customerController.find);
+customerRouter.get("/:customer_id", requireAuth, customerController.find);
 
 // CRUD
-customerRouter.put("/update",customerController.update)
-customerRouter.delete("/:customer_id", customerController.delete);
-customerRouter.post("/new", customerController.create);
+customerRouter.put("/update", requireAuth,customerController.update)
+customerRouter.delete("/:customer_id", requireAuth, customerController.delete);
+customerRouter.post("/new", requireAuth, customerController.create);
 
 // Statistics und so weiter
 
-customerRouter.get("/analytics/new-by-month", customerController.getByMonth);
-customerRouter.get("/analytics/by-country", customerController.getByCountry);
-customerRouter.get("/analytics/top-renters", customerController.getByRentals);
+customerRouter.get("/analytics/new-by-month", requireAuth, customerController.getByMonth);
+customerRouter.get("/analytics/by-country", requireAuth, customerController.getByCountry);
+customerRouter.get("/analytics/top-renters", requireAuth, customerController.getByRentals);
 
 // error handling 
 
