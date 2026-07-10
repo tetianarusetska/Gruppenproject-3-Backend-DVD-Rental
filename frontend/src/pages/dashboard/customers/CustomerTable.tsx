@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import { customerService } from "../../../services/customer.service";
 import { type Customer } from "../../../types/Customer";
 
+
 interface CustomerTableProps {
     query: string;
+    onSelect: (customer: Customer) => void;
+    refreshKey: number;
 }
 
-export default function CustomerTable({ query }: CustomerTableProps) {
-    const customersPerPage = 5;
+export default function CustomerTable({ query, onSelect, refreshKey }: CustomerTableProps) {
+
+    const customersPerPage = 15;
 
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +37,7 @@ export default function CustomerTable({ query }: CustomerTableProps) {
 
     useEffect(() => {
         loadCustomers();
-    }, [query]);
+    }, [query, refreshKey]);
 
     const totalCustomers = customers.length;
     const totalPages = Math.ceil(totalCustomers / customersPerPage);
@@ -126,7 +130,8 @@ export default function CustomerTable({ query }: CustomerTableProps) {
                                 currentCustomers.map((customer) => (
                                     <tr
                                         key={customer.customer_id}
-                                        className="border-b border-zinc-800 hover:bg-zinc-900 font-['Montserrat']"
+                                        onClick={() => onSelect(customer)}
+                                        className="cursor-pointer border-b border-zinc-800 hover:bg-zinc-900 font-['Montserrat']"
                                     >
                                         <td className="px-4 py-3 text-center">{customer.customer_id}</td>
                                         <td className="px-4 py-3 text-center">{customer.store_id}</td>
@@ -176,7 +181,7 @@ export default function CustomerTable({ query }: CustomerTableProps) {
 
                     </table>
 
-<div className="flex items-center justify-between pr-16 border-t border-zinc-800 px-6 py-4">
+                    <div className="flex items-center justify-between pr-16 border-t border-zinc-800 px-6 py-4">
                         <p className="text-sm text-zinc-400 font-['Montserrat']">
                             Zeige{" "}
                             {totalCustomers === 0
