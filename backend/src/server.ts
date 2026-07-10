@@ -90,7 +90,6 @@ app.use("/addresses", addressRouter)
 //rentals
 app.use("/rentals", rentalRouter)
 
-app.use(customersErrorHandler);
 
 app.listen(port, () => {
     console.log(`Server listening on port: ${port}`)

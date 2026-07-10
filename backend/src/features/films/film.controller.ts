@@ -44,13 +44,20 @@ const updateFilm = async (req: Request, res: Response) => {
 }
 
 const deleteFilm = async (req: Request, res: Response) => {
-    const filmId = Number(req.params.id);
-    if (isNaN(filmId)) {
-        return res.status(400).json({ error: "Invalid movie ID provided." });
+    try {
+        const filmId = Number(req.params.id);
+        if (isNaN(filmId)) {
+            return res.status(400).json({
+                error: "Invalid movie ID provided."
+            });
+        }
+        await filmServices.delete(filmId);
+        return res.status(204).send();
+    } catch (error) {
+        return res.status(500).json({
+            error: "Film konnte nicht gelöscht werden."
+        });
     }
-
-    await filmServices.delete(filmId)
-    return res.status(204).send()
 }
 
 export default {
