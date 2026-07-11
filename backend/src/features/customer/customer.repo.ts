@@ -1,9 +1,9 @@
-import { getPostgresPool } from "../../../db/postgres.pool.ts"
-import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
-import { type Customer } from "../types/customer.ts"
-import type { CustomerRental } from "../types/customerRentals.ts";
-import type { CustomerPayment } from "../types/customerPayment.ts";
-import type { UpdateCustomerInput } from "../types/updateCustomerInput.ts";
+import { getPostgresPool } from "../../db/postgres.pool.ts"
+import type { CreateCustomerInput } from "./types/createCustomerInput.ts";
+import { type Customer } from "./types/customer.ts"
+import type { CustomerRental } from "./types/customerRentals.ts";
+import type { CustomerPayment } from "./types/customerPayment.ts";
+import type { UpdateCustomerInput } from "./types/updateCustomerInput.ts";
 
 
 const pool = getPostgresPool();

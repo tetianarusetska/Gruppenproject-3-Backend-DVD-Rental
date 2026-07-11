@@ -1,5 +1,5 @@
 import type { Response, NextFunction } from "express";
-import type { Request } from "../types/request.ts";
+import type { Request } from "./types/request.ts";
 import customerService from "./customer.service.ts"
 
 

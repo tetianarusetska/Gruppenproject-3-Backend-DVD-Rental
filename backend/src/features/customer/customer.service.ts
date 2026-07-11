@@ -1,11 +1,11 @@
-import { type Customer } from "../types/customer.ts"
+import { type Customer } from "./types/customer.ts"
 import customerRepo from "./customer.repo.ts"
-import { CustomerNotFound, CustomerHasRelatedRecords } from "./customer.errors.ts"
-import type { CreateCustomerInput } from "../types/createCustomerInput.ts";
-import addressService from "../addresses/address.service.ts"
-import type { CustomerRental } from "../types/customerRentals.ts";
-import type { CustomerPayment } from "../types/customerPayment.ts";
-import type { UpdateCustomerInput } from "../types/updateCustomerInput.ts";
+import { CustomerNotFound, CustomerHasRelatedRecords } from "./customer.error.ts"
+import type { CreateCustomerInput } from "./types/createCustomerInput.ts";
+import addressService from "../address/address.service.ts"
+import type { CustomerRental } from "./types/customerRentals.ts";
+import type { CustomerPayment } from "./types/customerPayment.ts";
+import type { UpdateCustomerInput } from "./types/updateCustomerInput.ts";
 
 
 async function createCustomer(customer: CreateCustomerInput): Promise<Customer> {

@@ -1,7 +1,7 @@
-import { getPostgresPool } from "../../../db/postgres.pool.ts"
-import { type Address } from "../types/address.ts"
-import type { CreateAddressInput } from "../types/createAddressInput.ts";
-import type { UpdateAddressInput } from "../types/updateAddressInput.ts";
+import { getPostgresPool } from "../../db/postgres.pool.ts"
+import { type Address } from "./types/address.ts"
+import type { CreateAddressInput } from "./types/createAddressInput.ts";
+import type { UpdateAddressInput } from "./types/updateAddressInput.ts";
 
 const pool = getPostgresPool();
 
@@ -68,8 +68,22 @@ const getAllAddresses = async (): Promise<Address[]> => {
     return result.rows
 }
 
+async function getAddressById(address_id: number): Promise<Address | null> {
+    const result = await pool.query(
+        `
+        SELECT address_id, city_id, phone, address, district, postal_code
+        FROM address
+        WHERE address_id = $1
+        `,
+        [address_id]
+    );
+
+    return result.rows[0] ?? null;
+}
+
 export default {
     getAll: getAllAddresses,
     create: createAddress,
-    update: updateAddress
+    update: updateAddress,
+    getById: getAddressById
 }
