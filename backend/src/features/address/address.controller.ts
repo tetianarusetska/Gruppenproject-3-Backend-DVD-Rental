@@ -1,5 +1,5 @@
 import type { Response, NextFunction } from "express";
-import type { Request } from "../types/request.ts";
+import type { Request } from "../customer/types/request.ts";
 import addressService from "./address.service.ts"
 
 
@@ -35,8 +35,25 @@ const getAllAddresses = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+const getAddressById = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const address_id = Number(req.params.address_id);
+
+        const address = await addressService.getById(address_id);
+
+        if (!address) {
+            return res.status(404).json({ message: "Address not found" });
+        }
+
+        res.json(address);
+    } catch (err) {
+        next(err);
+    }
+};
+
 export default {
   getAll: getAllAddresses,
   create: createAddress,
-  update: updateAddress
+  update: updateAddress,
+  getById: getAddressById
 }

@@ -1,4 +1,4 @@
-import { type UpdateAddressInput } from "./updateAddressInput.ts"
+import { type UpdateAddressInput } from "../../address/types/updateAddressInput.ts"
 
 export type UpdateCustomerInput = {
     customer_id: number;

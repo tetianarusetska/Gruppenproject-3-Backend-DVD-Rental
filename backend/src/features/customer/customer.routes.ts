@@ -1,7 +1,7 @@
 import express from "express"
 import customerController from "./customer.controller.ts"
 import { customersErrorHandler } from "./customer.middleware.ts";
-import { requireAuth } from "../../auth/auth.middleware.ts"
+import { requireAuth } from "../auth/auth.middleware.ts"
 
 const customerRouter = express.Router();
 
