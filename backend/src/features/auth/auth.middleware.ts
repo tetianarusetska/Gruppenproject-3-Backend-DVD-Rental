@@ -3,11 +3,20 @@ import { type Request } from "./types/Request.ts"
 import sessionService from "./session.service.ts"
 import { CredentialsInvalid, SessionMissing } from "./auth.error.ts"
 
-export const requireAuth = (req: Request, _: Response, next: NextFunction) => {
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
     const { sessionId } = req.cookies
 
-    req.session = sessionService.find(sessionId)
+    if (!sessionId) {
+        return res.status(401).json({ error: "Missing Session" })
+    }
 
+    const session = sessionService.find(sessionId)
+    
+    if (!session) {
+        return res.status(401).json({ error: "Credentials Invalid" })
+    }
+
+    req.session = session
     return next()
 }
 
