@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Film } from "../types/Film";
+import type { Film } from "../../../../types/film/film";
 
 type ModalMode = "create" | "edit" | "delete";
 

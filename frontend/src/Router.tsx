@@ -12,14 +12,7 @@ export default function AppRouter() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute>
-      <DashboardPage />
-    </ProtectedRoute>
-  }
-/>
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}/>
 
     </Routes>
   );

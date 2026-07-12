@@ -1,6 +1,6 @@
-import { type Customer } from "../types/Customer";
-import type { Payment } from "../types/Payment";
-import type { Rental } from "../types/Rental";
+import { type Customer } from "../types/customer/Customer";
+import type { Payment } from "../types/customer/Payment";
+import type { Rental } from "../types/customer/Rental";
 
 const API_URL = "http://localhost:3000";
 

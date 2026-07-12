@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { customerService } from "../../../services/customer.service";
-import { type Customer } from "../../../types/Customer";
+import { type Customer } from "../../../types/customer/Customer";
 
 
 interface CustomerTableProps {

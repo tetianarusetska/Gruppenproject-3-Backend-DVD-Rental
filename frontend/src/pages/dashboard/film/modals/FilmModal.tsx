@@ -1,4 +1,4 @@
-import type { Film } from "../types/Film";
+import type { Film } from "../../../../types/film/film";
 
 interface FilmModalProps {
   film: Film;
