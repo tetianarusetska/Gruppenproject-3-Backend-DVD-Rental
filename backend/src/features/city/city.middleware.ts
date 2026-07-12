@@ -5,4 +5,6 @@ export const CityErrorHandler = (error: Error, _: Request, res: Response, next: 
     if (error instanceof CityNotFound) {
         return res.status(404).json({error: error.message})
     }
+
+     next(error)
 }

@@ -15,8 +15,8 @@ const getStaffById = async (req: Request<{ staff_id: string }>, res: Response, n
     try {
         const staffId = Number(req.params.staff_id);
 
-        if (!Number.isInteger(staffId)) {
-            return res.status(400).json({ message: "Invalid staff_id" });
+        if (isNaN(staffId)) {
+            return res.status(400).json({ error: "Ungültige Staff-ID angegeben." });
         }
 
         const staff = await staffService.getById(staffId);
