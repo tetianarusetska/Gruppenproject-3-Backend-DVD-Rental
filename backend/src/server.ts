@@ -29,6 +29,7 @@ import inventoryRouter from "./features/inventory/inventory.routes.ts"
 
 
 import { customersErrorHandler } from "./features/customer/customer.middleware.ts"
+import { errorFallback } from "./error.middleware.ts"
 
 const port = 3000
 const app = express()
@@ -84,6 +85,8 @@ app.use("/rentals", rentalRouter)
 app.use("/staff", staffRouter)
 app.use("/store", storeRouter)
 app.use("/inventory", inventoryRouter)
+
+app.use(errorFallback)
 
 
 app.listen(port, () => {
