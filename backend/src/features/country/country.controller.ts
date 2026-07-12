@@ -11,9 +11,14 @@ const getAllCountries = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
-const getCountryById = async (req: Request<{ country_id: number }>, res: Response, next: NextFunction) => {
+const getCountryById = async (req: Request<{ country_id: string }>, res: Response, next: NextFunction) => {
     try {
         const countryId = Number(req.params.country_id);
+
+        if (isNaN(countryId)) {
+            return res.status(400).json({ error: "Ungültige Land-ID angegeben." });
+        }
+
         const country = await countryService.getById(countryId);
         res.status(200).json(country);
     } catch (err) {

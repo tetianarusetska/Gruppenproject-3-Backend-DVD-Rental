@@ -15,8 +15,8 @@ const getStoreById = async (req: Request<{ store_id: string }>, res: Response, n
     try {
         const storeId = Number(req.params.store_id);
 
-        if (!Number.isInteger(storeId)) {
-            return res.status(400).json({ message: "Invalid store_id" });
+         if (isNaN(storeId)) {
+            return res.status(400).json({ error: "Ungültige Store-ID angegeben." });
         }
 
         const store = await storeService.getById(storeId);

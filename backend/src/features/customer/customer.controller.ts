@@ -50,6 +50,11 @@ const searchCustomer = async (req: Request, res: Response, next: NextFunction) =
 const findCustomerById = async (req: Request<{ customer_id: string }>, res: Response, next: NextFunction) => {
     try {
         const customerId = Number(req.params.customer_id);
+
+        if (isNaN(customerId)) {
+            return res.status(400).json({ error: "Ungültige Kunden-ID angegeben." });
+        }
+
         const customer = await customerService.find(customerId);
         res.status(200).json(customer);
     } catch (err) {
@@ -141,7 +146,7 @@ export default {
     getRentals: getCustomerRentals,
     getPayments: getCustomerPayments,
     // Statistics und so weiter
-    getByMonth: getNewCustomersByMonth, 
+    getByMonth: getNewCustomersByMonth,
     getByCountry: getCustomersByCountry,
     getByRentals: getTopCustomersByRentals
 }

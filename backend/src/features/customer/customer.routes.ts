@@ -15,7 +15,7 @@ customerRouter.get("/:customer_id/rentals", requireAuth, customerController.getR
 customerRouter.get("/:customer_id", requireAuth, customerController.find);
 
 // CRUD
-customerRouter.put("/update", requireAuth,customerController.update)
+customerRouter.post("/update", requireAuth,customerController.update)
 customerRouter.delete("/:customer_id", requireAuth, customerController.delete);
 customerRouter.post("/new", requireAuth, customerController.create);
 

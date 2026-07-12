@@ -15,8 +15,8 @@ const getInventoryById = async (req: Request<{ inventory_id: string }>, res: Res
     try {
         const inventoryId = Number(req.params.inventory_id);
 
-        if (!Number.isInteger(inventoryId)) {
-            return res.status(400).json({ message: "Invalid inventory_id" });
+       if (isNaN(inventoryId)) {
+            return res.status(400).json({ error: "Ungültige Inventory-ID angegeben." });
         }
 
         const inventory = await inventoryService.getById(inventoryId);
