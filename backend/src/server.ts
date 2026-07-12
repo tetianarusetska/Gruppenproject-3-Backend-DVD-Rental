@@ -22,6 +22,12 @@ import addressRouter from "./features/address/address.routes.ts"
 // rentals
 import rentalRouter from "./features/rental/rental.router.ts"
 
+// staff, inventory, store
+import staffRouter from "./features/staff/staff.routes.ts"
+import storeRouter from "./features/store/store.routes.ts"
+import inventoryRouter from "./features/inventory/inventory.routes.ts"
+
+
 import { customersErrorHandler } from "./features/customer/customer.middleware.ts"
 
 const port = 3000
@@ -73,6 +79,11 @@ app.use("/addresses", addressRouter)
 
 //rentals
 app.use("/rentals", rentalRouter)
+
+// staff, store, inventory
+app.use("/staff", staffRouter)
+app.use("/store", storeRouter)
+app.use("/inventory", inventoryRouter)
 
 
 app.listen(port, () => {
