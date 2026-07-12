@@ -17,12 +17,12 @@ const STORE_QUERY = `
 `;
 
 const getAllStores = async (): Promise<StoreWithDetails[]> => {
-    const result = await pool.query(⁠ ${STORE_QUERY} ORDER BY st.store_id ⁠); 
+    const result = await pool.query(`${STORE_QUERY} ORDER BY st.store_id`);
     return result.rows;
 };
 
 const getStoreById = async (store_id: number): Promise<StoreWithDetails | null> => {
-    const result = await pool.query(⁠ ${STORE_QUERY} WHERE st.store_id = $1 ⁠, [store_id]);
+    const result = await pool.query(`${STORE_QUERY} WHERE st.store_id = $1`, [store_id]);
     return result.rows[0] ?? null;
 };
 

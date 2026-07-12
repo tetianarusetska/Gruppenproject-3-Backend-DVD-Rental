@@ -16,14 +16,14 @@ const STAFF_QUERY = `
 
 const getAllStaff = async (): Promise<StaffWithAddress[]> => {
 
-    const result = await pool.query(⁠ ${STAFF_QUERY} ORDER BY s.staff_id ⁠);
+    const result = await pool.query(`${STAFF_QUERY} ORDER BY s.staff_id`);
 
     return result.rows;
 };
 
 const getStaffById = async (staff_id: number): Promise<StaffWithAddress | null> => {
 
-    const result = await pool.query(⁠ ${STAFF_QUERY} WHERE s.staff_id = $1 ⁠, [staff_id]);
+    const result = await pool.query(`${STAFF_QUERY} WHERE s.staff_id = $1`, [staff_id]);
 
     return result.rows[0] ?? null;
 };

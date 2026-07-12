@@ -17,12 +17,12 @@ const INVENTORY_QUERY = `
 `;
 
 const getAllInventory = async (): Promise<InventoryWithDetails[]> => {
-    const result = await pool.query(⁠ ${INVENTORY_QUERY} ORDER BY i.inventory_id ⁠);
+    const result = await pool.query(`${INVENTORY_QUERY} ORDER BY i.inventory_id`);
     return result.rows;
 };
 
 const getInventoryById = async (inventory_id: number): Promise<InventoryWithDetails | null> => {
-    const result = await pool.query(⁠ ${INVENTORY_QUERY} WHERE i.inventory_id = $1 ⁠, [inventory_id]);
+    const result = await pool.query(`${INVENTORY_QUERY} WHERE i.inventory_id = $1`, [inventory_id]);
     return result.rows[0] ?? null;
 };
 
