@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { FilmList } from "./types/FilmList";
+import type { FilmList } from "../../../types/film/filmList";
 
 export interface FilmAvailability {
   total_copies: number;

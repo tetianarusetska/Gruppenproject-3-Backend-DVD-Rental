@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-import CustomersDashboard from "./customers/CustomersDashboard";
-import FilmsDashboard from "./films/FilmsDashboard";
+import CustomersDashboard from "./customer/CustomersDashboard";
+import FilmDashboard from "./film/FilmDashboard";
 import RentalDashboard from "./rental/RentalDashboard";
-import ReportsDashboard from "./reports/ReportsDashboard";
+import ReportDashboard from "./report/ReportDashboard";
+
 
 const menu = [
   "Kunden",
@@ -14,9 +15,9 @@ const menu = [
 
 const dashboards = {
   Kunden: <CustomersDashboard />,
-  Filme: <FilmsDashboard />,
+  Filme: <FilmDashboard />,
   Ausleihen: <RentalDashboard />,
-  Reports: <ReportsDashboard />,
+  Reports: <ReportDashboard />,
 };
 
 type MenuItem = keyof typeof dashboards;

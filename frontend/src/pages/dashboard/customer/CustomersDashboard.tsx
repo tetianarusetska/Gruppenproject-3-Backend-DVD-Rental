@@ -6,7 +6,7 @@ import CustomerDetailsModal from "./modals/CustomerDetailsModal";
 import CustomerFormModal from "./modals/CustomerFormModal";
 import CustomerEditModal from "./modals/CustomerEditModal";
 import DeleteConfirmModal from "./modals/DeleteConfirmModal";
-import { type Customer } from "../../../types/Customer";
+import { type Customer } from "../../../types/customer/Customer";
 import CustomerStatistic from "./CustomerStatistic";
 
 export default function CustomersDashboard() {

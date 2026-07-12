@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { filmService } from "../../../services/film.service";
-import type { FilmStatistics } from "../../../services/film.service";
+import type { FilmStatistics } from "../../../types/film/filmStatistics";
 
 export default function FilmStatistics() {
     const [stats, setStats] = useState<FilmStatistics | null>(null);

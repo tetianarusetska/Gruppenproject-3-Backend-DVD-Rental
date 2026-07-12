@@ -1,39 +1,9 @@
-import type { Film } from "../pages/dashboard/films/types/Film";
-import type { FilmList } from "../pages/dashboard/films/types/FilmList";
+import type { Film } from "../types/film/film";
+import type { FilmAvailabilityEntry } from "../types/film/filmAvailabilityEntry";
+import type { FilmList } from "../types/film/filmList";
+import type { FilmStatistics } from "../types/film/filmStatistics";
 
 const API_URL = "http://localhost:3000";
-
-export interface FilmAvailabilityEntry {
-    film_id: number;
-    title: string;
-    store_id: number;
-    total_copies: number;
-    available_copies: number;
-}
-
-export interface FilmStatistics {
-    totalFilms: number;
-    totalCopies: number;
-    availableCopies: number;
-    avgLength: number;
-    avgRentalRate: string;
-    topRating: string;
-
-    topFilms: {
-        title: string;
-        rentals: number;
-    }[];
-
-    ratings: {
-        rating: string;
-        count: number;
-    }[];
-
-    rentalsByMonth: {
-        month: string;
-        count: number;
-    }[];
-}
 
 export const filmService = {
 

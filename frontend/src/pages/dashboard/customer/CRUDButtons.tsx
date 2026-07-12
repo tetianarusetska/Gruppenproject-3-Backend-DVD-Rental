@@ -1,4 +1,4 @@
-import { type Customer } from "../../../types/Customer";
+import { type Customer } from "../../../types/customer/Customer";
 
 interface CRUDButtonsProps {
     selectedCustomer: Customer | null;

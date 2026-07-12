@@ -7,8 +7,8 @@ import Pagination from "./Pagination";
 import Modal from "./modals/Modal";
 import FilmModal from "./modals/FilmModal";
 
-import type { Film } from "./types/Film";
-import type { FilmList } from "./types/FilmList";
+import type { Film } from "../../../types/film/film";
+import type { FilmList } from "../../../types/film/filmList";
 import type { FilmAvailability } from "./FilmTable";
 
 import { filmService } from "../../../services/film.service";

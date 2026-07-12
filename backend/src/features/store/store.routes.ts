@@ -6,7 +6,7 @@ import { StoreErrorHandler } from "./store.middleware.ts";
 const storeRouter = express.Router();
 
 storeRouter.get("/all", requireAuth, storeController.getAll);
-storeRouter.get("/:storeP_id", requireAuth, storeController.getById);
+storeRouter.get("/:store_id", requireAuth, storeController.getById);
 storeRouter.post("/new", requireAuth, storeController.create);
 
 
