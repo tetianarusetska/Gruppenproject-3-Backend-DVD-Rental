@@ -38,12 +38,12 @@ TODO !! – z. B. Render / Railway / eigener VPS (Backend) + Vercel (Frontend)
 **Mehrfilialen-Unterstützung** – Daten (Mitarbeiter, Inventar, Bestand) werden pro Filiale (z. B. Lethbridge, Woodridge, Sasebo) ausgewertet und dargestellt
 
 ## Screens
-![Reports](./public/readme/reports.png)
-![Verfügbarkeit](./public/readme/rental.png)
-![Filme](./public/readme/films1.png)
-![Filme](./public/readme/films2.png)
-![Kunden](./public/readme/customers1.png)
-![Kunden](./public/readme/customers2.png)
+![Reports](./frontend/src/assets/images/reports.png)
+![Verfügbarkeit](./frontend/src/assets/images/rental.png)
+![Filme](./frontend/src/assets/images/films1.png)
+![Filme](./frontend/src/assets/images/films2.png)
+![Kunden](./frontend/src/assets/images/customers1.png)
+![Kunden](./frontend/src/assets/images/customers2.png)
 
 ## Live-Demo
 TODO !!
