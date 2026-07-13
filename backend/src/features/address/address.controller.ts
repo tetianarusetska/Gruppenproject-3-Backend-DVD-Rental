@@ -41,8 +41,8 @@ const getAddressById = async (req: Request, res: Response, next: NextFunction) =
 
         const address = await addressService.getById(address_id);
 
-        if (!address) {
-            return res.status(404).json({ message: "Address not found" });
+        if (isNaN(address_id)) {
+            return res.status(400).json({ error: "Ungültige Address-ID angegeben." });
         }
 
         res.json(address);

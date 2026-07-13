@@ -23,6 +23,7 @@ const hashPassword = (password: string): string => {
     return crypto.createHash("sha1").update(password).digest("hex");
 };
 
+// mit KI-Hilfe
 const createStaff = async (data: CreateStaff): Promise<StaffWithAddress> => {
     const hashedPassword = hashPassword(data.password);
     const staffId = await staffRepo.create({ ...data, password: hashedPassword });
