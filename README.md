@@ -13,7 +13,7 @@ Express (Node.js REST API), PostgreSQL (Sakila-basiertes Datenmodell: Filme, Kun
 Docker (Containerisierung von App & DB), Postman (API-Testing & Dokumentation)
 
 ### Hosting
-TODO – z. B. Render / Railway / eigener VPS (Backend) + Vercel (Frontend)
+TODO !! – z. B. Render / Railway / eigener VPS (Backend) + Vercel (Frontend)
 
 ## Kernfeatures
 
@@ -46,4 +46,4 @@ TODO – z. B. Render / Railway / eigener VPS (Backend) + Vercel (Frontend)
 ![Kunden](./public/readme/customers2.png)
 
 ## Live-Demo
-TODO 
+TODO !!
