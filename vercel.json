@@ -6,7 +6,11 @@
         },
         "backend": {
             "root": "backend",
+<<<<<<< HEAD
              "entrypoint": "/backend/src/server.ts"
+=======
+             "entrypoint": "/src/server.ts"
+>>>>>>> 5680a7458b673deb6ddc4a8c6bb2b0ffcb0f1924
         }
     },
     "rewrites": [
