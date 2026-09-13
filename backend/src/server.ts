@@ -29,33 +29,38 @@ import inventoryRouter from "./features/inventory/inventory.routes.ts"
 import { customersErrorHandler } from "./features/customer/customer.middleware.ts"
 import { errorFallback } from "./error.middleware.ts"
 
-const port = 3000
 const app = express()
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "https://gruppenproject-3-backend-dvd-rental.vercel.app/login"
+]
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"];
-
-// CORS
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  // Erlaube explizit dein Frontend
+  const origin = req.headers.origin
+
   if (origin && allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Origin", origin)
   }
-  // Erlaube das Mitsenden von Cookies (credentials)
-  res.header("Access-Control-Allow-Credentials", "true");
-  // Erlaube die gängigen HTTP-Methoden
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  // Erlaube notwendige Header-Typen
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  // Falls es ein OPTIONS-Preflight-Request vom Browser ist, direkt mit 200 beantworten
+
+  res.header("Access-Control-Allow-Credentials", "true")
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PUT,DELETE,OPTIONS"
+  )
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  )
+
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+    return res.sendStatus(200)
   }
 
-  next();
-});
-
+  next()
+})
 
 app.use(express.json())
 app.use(cookieParser())
@@ -65,22 +70,18 @@ app.get("/health", getHealth)
 
 app.use("/api/auth", authRouter)
 
-//films
 app.use("/api/films", filmRouter)
 app.use("/api/actors", actorRouter)
 app.use("/api/categories", categoryRouter)
 app.use("/api/languages", languageRouter)
 
-//customers
 app.use("/api/customers", customerRouter)
 app.use("/api/cities", cityRouter)
 app.use("/api/countries", countryRouter)
 app.use("/api/addresses", addressRouter)
 
-//rentals
 app.use("/api/rentals", rentalRouter)
 
-// staff, store, inventory
 app.use("/api/staff", staffRouter)
 app.use("/api/store", storeRouter)
 app.use("/api/inventory", inventoryRouter)
@@ -90,6 +91,7 @@ app.use(errorFallback)
 
 export default app
 
+
 if (process.env.NODE_ENV !== "production") {
   const port = Number(process.env.PORT) || 3000
 
@@ -97,5 +99,3 @@ if (process.env.NODE_ENV !== "production") {
     console.log(`Server listening on port ${port}`)
   })
 }
-
-
