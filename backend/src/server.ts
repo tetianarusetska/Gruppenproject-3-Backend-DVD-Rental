@@ -2,7 +2,6 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import { getHealth } from "./health.ts"
-import cors from "cors"
 
 // auth
 import authRouter from "./features/auth/auth.router.ts"
@@ -27,7 +26,6 @@ import staffRouter from "./features/staff/staff.routes.ts"
 import storeRouter from "./features/store/store.routes.ts"
 import inventoryRouter from "./features/inventory/inventory.routes.ts"
 
-
 import { customersErrorHandler } from "./features/customer/customer.middleware.ts"
 import { errorFallback } from "./error.middleware.ts"
 
@@ -37,6 +35,7 @@ const app = express()
 
 const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"];
 
+// CORS
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   // Erlaube explizit dein Frontend
@@ -86,9 +85,17 @@ app.use("/api/staff", staffRouter)
 app.use("/api/store", storeRouter)
 app.use("/api/inventory", inventoryRouter)
 
+app.use(customersErrorHandler)
 app.use(errorFallback)
 
+export default app
 
-app.listen(port, () => {
-    console.log(`Server listening on port: ${port}`)
-})
+if (process.env.NODE_ENV !== "production") {
+  const port = Number(process.env.PORT) || 3000
+
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
+  })
+}
+
+
