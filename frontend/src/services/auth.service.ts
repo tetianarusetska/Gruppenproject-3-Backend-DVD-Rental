@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "/api";
 
 export const authService = {
   // 1. Login-Daten an das Backend senden

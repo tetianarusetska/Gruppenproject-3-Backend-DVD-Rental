@@ -64,27 +64,27 @@ app.use(morgan("dev"))
 
 app.get("/health", getHealth)
 
-app.use("/auth", authRouter)
+app.use("/api/auth", authRouter)
 
 //films
-app.use("/films", filmRouter)
-app.use("/actors", actorRouter)
-app.use("/categories", categoryRouter)
-app.use("/languages", languageRouter)
+app.use("/api/films", filmRouter)
+app.use("/api/actors", actorRouter)
+app.use("/api/categories", categoryRouter)
+app.use("/api/languages", languageRouter)
 
 //customers
-app.use("/customers", customerRouter)
-app.use("/cities", cityRouter)
-app.use("/countries", countryRouter)
-app.use("/addresses", addressRouter)
+app.use("/api/customers", customerRouter)
+app.use("/api/cities", cityRouter)
+app.use("/api/countries", countryRouter)
+app.use("/api/addresses", addressRouter)
 
 //rentals
-app.use("/rentals", rentalRouter)
+app.use("/api/rentals", rentalRouter)
 
 // staff, store, inventory
-app.use("/staff", staffRouter)
-app.use("/store", storeRouter)
-app.use("/inventory", inventoryRouter)
+app.use("/api/staff", staffRouter)
+app.use("/api/store", storeRouter)
+app.use("/api/inventory", inventoryRouter)
 
 app.use(errorFallback)
 

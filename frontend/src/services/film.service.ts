@@ -3,7 +3,7 @@ import type { FilmAvailabilityEntry } from "../types/film/filmAvailabilityEntry"
 import type { FilmList } from "../types/film/filmList";
 import type { FilmStatistics } from "../types/film/filmStatistics";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "/api";
 
 export const filmService = {
 

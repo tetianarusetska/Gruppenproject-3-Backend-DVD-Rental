@@ -28,7 +28,7 @@ export default function RentalDashboard() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:3000/films/availability?title=${encodeURIComponent(
+                    `/api/films/availability?title=${encodeURIComponent(
                         filmSearch.trim()
                     )}`,
                     {

@@ -3,7 +3,7 @@ import type { Staff } from "../types/report/staff";
 import type { Store } from "../types/report/store";
 
 
-const API_URL = "http://localhost:3000";
+const API_URL = "/api";
 
 export const storeService = {
     async getAll(): Promise<Store[]> {
