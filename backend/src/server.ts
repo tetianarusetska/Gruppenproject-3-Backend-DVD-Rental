@@ -35,7 +35,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
-  "https://gruppenproject-3-backend-dvd-rental.vercel.app/login"
+  "https://gruppenproject-3-backend-dvd-rental.vercel.app"
 ]
 
 app.use((req, res, next) => {
@@ -65,6 +65,12 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("dev"))
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "DVD Rental API is running"
+  })
+})
 
 app.get("/health", getHealth)
 
