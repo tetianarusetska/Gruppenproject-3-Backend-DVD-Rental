@@ -12,9 +12,9 @@ export function getPostgresPool(): Pool {
             ? new Pool({
                 connectionString: process.env.DATABASE_URL,
                 ssl: { rejectUnauthorized: false },
-                max: 10,
+                max: 1,
                 idleTimeoutMillis: 30_000,
-                connectionTimeoutMillis: 2_000
+                connectionTimeoutMillis: 5_000
             })
             : new Pool({
                 host: process.env.POSTGRES_HOST,
@@ -22,9 +22,9 @@ export function getPostgresPool(): Pool {
                 user: process.env.POSTGRES_USER,
                 password: process.env.POSTGRES_PASSWORD,
                 database: process.env.POSTGRES_DB,
-                max: 10,
+                max: 1,
                 idleTimeoutMillis: 30_000,
-                connectionTimeoutMillis: 2_000
+                connectionTimeoutMillis: 5_000
             })
 
         pool.on("error", (err) => {
